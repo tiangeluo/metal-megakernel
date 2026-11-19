@@ -1,0 +1,288 @@
+{
+  "observable": "layer11_post_moe",
+  "scope": "Largest recorded vs-CPU violation for each failing method and fixture.",
+  "definition": "Sum of absolute weighted CPU expert contributions divided by absolute signed sum, before FP16 output storage.",
+  "interpretation": "A large ratio quantifies cancellation at this coordinate. GPU expert components were not recorded. Projection replays change CPU dot accumulation with the registered FP16 casts.",
+  "records": [
+    {
+      "case": "stack-b1-l4096",
+      "seed": 20261118,
+      "diagnostic_file": "stack-b1-l4096-seed20261118.json",
+      "diagnostic_sha256": "8530e9603841f803b0a066b7608902477e01427673d91111715001d0ad24eb15",
+      "ordered_expert_ids": [
+        295,
+        105,
+        122,
+        274,
+        365,
+        376,
+        51,
+        69
+      ],
+      "channels": 1152,
+      "median_cancellation_ratio": 3.123374431944576,
+      "witnesses": [
+        {
+          "method": "compiled",
+          "actual": 0.0099029541015625,
+          "expected": 0.0135650634765625,
+          "index": [
+            0,
+            0,
+            6
+          ],
+          "weighted_expert_terms": [
+            0.5402911305427551,
+            -0.5178354382514954,
+            0.7400435209274292,
+            -0.7382214665412903,
+            -0.6645498871803284,
+            0.560589075088501,
+            -0.016095666214823723,
+            0.10934194177389145
+          ],
+          "sum_abs_terms": 3.8869681265205145,
+          "signed_sum": 0.013563210144639015,
+          "cancellation_ratio": 286.58172254721535,
+          "percentile_across_channels": 99.56597222222221,
+          "cpu_projection_replays": {
+            "original_fp32_einsum": 0.0135650634765625,
+            "matmul_fp32": 0.0110626220703125,
+            "partials_fp32": 0.01206207275390625,
+            "einsum_fp64": 0.0125274658203125
+          }
+        },
+        {
+          "method": "hybrid",
+          "actual": 0.0099029541015625,
+          "expected": 0.0135650634765625,
+          "index": [
+            0,
+            0,
+            6
+          ],
+          "weighted_expert_terms": [
+            0.5402911305427551,
+            -0.5178354382514954,
+            0.7400435209274292,
+            -0.7382214665412903,
+            -0.6645498871803284,
+            0.560589075088501,
+            -0.016095666214823723,
+            0.10934194177389145
+          ],
+          "sum_abs_terms": 3.8869681265205145,
+          "signed_sum": 0.013563210144639015,
+          "cancellation_ratio": 286.58172254721535,
+          "percentile_across_channels": 99.56597222222221,
+          "cpu_projection_replays": {
+            "original_fp32_einsum": 0.0135650634765625,
+            "matmul_fp32": 0.0110626220703125,
+            "partials_fp32": 0.01206207275390625,
+            "einsum_fp64": 0.0125274658203125
+          }
+        },
+        {
+          "method": "single",
+          "actual": -0.0113983154296875,
+          "expected": -0.0135650634765625,
+          "index": [
+            0,
+            0,
+            997
+          ],
+          "weighted_expert_terms": [
+            1.0560930967330933,
+            -0.5606976747512817,
+            0.39741265773773193,
+            0.23416702449321747,
+            0.7376981973648071,
+            -0.5746523141860962,
+            -1.4730753898620605,
+            0.16948601603507996
+          ],
+          "sum_abs_terms": 5.203282371163368,
+          "signed_sum": -0.013568386435508728,
+          "cancellation_ratio": 383.4857148191386,
+          "percentile_across_channels": 99.82638888888889,
+          "cpu_projection_replays": {
+            "original_fp32_einsum": -0.0135650634765625,
+            "matmul_fp32": -0.0136871337890625,
+            "partials_fp32": -0.014068603515625,
+            "einsum_fp64": -0.01312255859375
+          }
+        },
+        {
+          "method": "staged",
+          "actual": -0.0113983154296875,
+          "expected": -0.0135650634765625,
+          "index": [
+            0,
+            0,
+            997
+          ],
+          "weighted_expert_terms": [
+            1.0560930967330933,
+            -0.5606976747512817,
+            0.39741265773773193,
+            0.23416702449321747,
+            0.7376981973648071,
+            -0.5746523141860962,
+            -1.4730753898620605,
+            0.16948601603507996
+          ],
+          "sum_abs_terms": 5.203282371163368,
+          "signed_sum": -0.013568386435508728,
+          "cancellation_ratio": 383.4857148191386,
+          "percentile_across_channels": 99.82638888888889,
+          "cpu_projection_replays": {
+            "original_fp32_einsum": -0.0135650634765625,
+            "matmul_fp32": -0.0136871337890625,
+            "partials_fp32": -0.014068603515625,
+            "einsum_fp64": -0.01312255859375
+          }
+        }
+      ]
+    },
+    {
+      "case": "stack-b1-l64",
+      "seed": 20261118,
+      "diagnostic_file": "stack-b1-l64-seed20261118.json",
+      "diagnostic_sha256": "a3e37d9af22af487880c8378f5e7bfcb7e868a137b634dc96a2bbe4933f3f307",
+      "ordered_expert_ids": [
+        122,
+        274,
+        295,
+        262,
+        105,
+        218,
+        51,
+        365
+      ],
+      "channels": 1152,
+      "median_cancellation_ratio": 2.8391770668544565,
+      "witnesses": [
+        {
+          "method": "compiled",
+          "actual": -0.1019287109375,
+          "expected": -0.105712890625,
+          "index": [
+            0,
+            0,
+            801
+          ],
+          "weighted_expert_terms": [
+            0.0890733152627945,
+            -1.2991526126861572,
+            -0.3927563428878784,
+            0.022229617461562157,
+            0.34220626950263977,
+            0.4814744293689728,
+            -0.7662829756736755,
+            1.4175081253051758
+          ],
+          "sum_abs_terms": 4.810683688148856,
+          "signed_sum": -0.1057001743465662,
+          "cancellation_ratio": 45.51254260353202,
+          "percentile_across_channels": 96.18055555555556,
+          "cpu_projection_replays": {
+            "original_fp32_einsum": -0.105712890625,
+            "matmul_fp32": -0.1046142578125,
+            "partials_fp32": -0.10418701171875,
+            "einsum_fp64": -0.10675048828125
+          }
+        },
+        {
+          "method": "hybrid",
+          "actual": -0.1019287109375,
+          "expected": -0.105712890625,
+          "index": [
+            0,
+            0,
+            801
+          ],
+          "weighted_expert_terms": [
+            0.0890733152627945,
+            -1.2991526126861572,
+            -0.3927563428878784,
+            0.022229617461562157,
+            0.34220626950263977,
+            0.4814744293689728,
+            -0.7662829756736755,
+            1.4175081253051758
+          ],
+          "sum_abs_terms": 4.810683688148856,
+          "signed_sum": -0.1057001743465662,
+          "cancellation_ratio": 45.51254260353202,
+          "percentile_across_channels": 96.18055555555556,
+          "cpu_projection_replays": {
+            "original_fp32_einsum": -0.105712890625,
+            "matmul_fp32": -0.1046142578125,
+            "partials_fp32": -0.10418701171875,
+            "einsum_fp64": -0.10675048828125
+          }
+        },
+        {
+          "method": "single",
+          "actual": 0.0789794921875,
+          "expected": 0.08270263671875,
+          "index": [
+            0,
+            0,
+            1032
+          ],
+          "weighted_expert_terms": [
+            -0.34847649931907654,
+            0.10251443833112717,
+            0.3526635468006134,
+            0.1712639033794403,
+            0.516146719455719,
+            0.1706656962633133,
+            -0.36147162318229675,
+            -0.5206222534179688
+          ],
+          "sum_abs_terms": 2.543824680149555,
+          "signed_sum": 0.08268392831087112,
+          "cancellation_ratio": 30.765648562141404,
+          "percentile_across_channels": 94.70486111111111,
+          "cpu_projection_replays": {
+            "original_fp32_einsum": 0.08270263671875,
+            "matmul_fp32": 0.08099365234375,
+            "partials_fp32": 0.08184814453125,
+            "einsum_fp64": 0.0821533203125
+          }
+        },
+        {
+          "method": "staged",
+          "actual": 0.0789794921875,
+          "expected": 0.08270263671875,
+          "index": [
+            0,
+            0,
+            1032
+          ],
+          "weighted_expert_terms": [
+            -0.34847649931907654,
+            0.10251443833112717,
+            0.3526635468006134,
+            0.1712639033794403,
+            0.516146719455719,
+            0.1706656962633133,
+            -0.36147162318229675,
+            -0.5206222534179688
+          ],
+          "sum_abs_terms": 2.543824680149555,
+          "signed_sum": 0.08268392831087112,
+          "cancellation_ratio": 30.765648562141404,
+          "percentile_across_channels": 94.70486111111111,
+          "cpu_projection_replays": {
+            "original_fp32_einsum": 0.08270263671875,
+            "matmul_fp32": 0.08099365234375,
+            "partials_fp32": 0.08184814453125,
+            "einsum_fp64": 0.0821533203125
+          }
+        }
+      ]
+    }
+  ]
+}
