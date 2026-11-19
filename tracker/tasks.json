@@ -94,7 +94,7 @@
     "tasks": [
       [
         "Run the two-point pilot",
-        "Compare all four schedules on the 48:8 global path at batch one and lengths 64 and 4,096. Confirm GPU visibility, correctness, a trace and repeatable timing before expanding the sweep.",
+        "Compare all four schedules at 48:8, batch one and lengths 64 and 4,096. The original plan called for a trace before expanding. The first sweep was collected before tracing. Dispatch verification remains open under the parallelism task.",
         "Blocked",
         "The pilot preflight found zero accessible GPU devices here and produced no measurements. The ordinary Mac session can collect real trial timings with ./mac-run pilot."
       ],

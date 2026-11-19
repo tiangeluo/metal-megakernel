@@ -1,0 +1,83 @@
+{
+  "case": "attention-b1-l64",
+  "oracle_max_abs": {
+    "0": {
+      "compiled": {
+        "cache_k": 0.0,
+        "cache_v": 3.0517578125e-05,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "hybrid": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "single": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "split": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "staged": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      }
+    },
+    "1": {
+      "compiled": {
+        "cache_k": 1.9073486328125e-06,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.000244140625
+      },
+      "hybrid": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.000244140625
+      },
+      "single": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.000244140625
+      },
+      "split": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.000244140625
+      },
+      "staged": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.000244140625
+      }
+    }
+  },
+  "rechecked_after_timing": true,
+  "row_count": 500,
+  "schema": 1,
+  "sha256": "68eaa949c33057aff898a7868f5918955bb569701f30099e5f30576ebd0ccbc4"
+}

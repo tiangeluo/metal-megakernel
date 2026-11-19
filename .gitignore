@@ -12,3 +12,17 @@ results/*
 .ruff_cache/
 !results/cpu-attention.json
 !results/cpu-decoder.json
+!results/m4pro-01-a/
+results/m4pro-01-a/*
+!results/m4pro-01-a/full/
+results/m4pro-01-a/full/*
+!results/m4pro-01-a/full/manifest.json
+!results/m4pro-01-a/full/*.csv
+!results/m4pro-01-a/full/*.proof.json
+!results/m4pro-01-pilot/
+results/m4pro-01-pilot/*
+!results/m4pro-01-pilot/pilot/
+results/m4pro-01-pilot/pilot/*
+!results/m4pro-01-pilot/pilot/manifest.json
+!results/m4pro-01-pilot/pilot/*.csv
+!results/m4pro-01-pilot/pilot/*.proof.json

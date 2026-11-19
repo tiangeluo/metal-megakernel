@@ -22,8 +22,18 @@ The staged Metal implementation gives the same scan its own dispatch. The compil
 
 The CPU reference processed a 64-token trajectory at the published head dimensions. An independent prefix implementation, with FP64 arithmetic at the agreed FP16 storage boundaries, gave a maximum absolute gated-output difference of 0.0009765625. In the connected two-layer test, the width is 1,152 and each layer contains 384 experts, eight active per token. The full expert matrices occupy 2.85 GiB. CPU passes at visible lengths 64 and 4,096 returned finite summaries and cache states. The weights and incoming upstream block states are seeded.
 
-## Performance measurements
+## One dispatch or four?
 
-The performance figure will plot absolute synchronized latency for all four schedules against six context lengths. The accompanying table will also show the two-layer latency, which includes projections and routed expert execution. That distinction matters. A gain inside attention can have little effect on a complete decode step if most time is spent elsewhere.
+On my M4 Pro, a single dispatch took 2,840 µs to process one token against 4,096 visible positions. Splitting the history into 32-token chunks and merging their softmax statistics took 436 µs across four dispatches, a 6.51× difference. The pilot independently measured 2,861 versus 453 µs (6.32×). Simply separating preparation, scan and gate into three dispatches took 2,132 µs. How the scan divides work matters here even among schedules with similar dispatch counts.
 
-Run `./mac-run study` to generate the figure and table from two checked GPU sessions. The current draft contains the measurements available on CPU. The GPU comparison and interpretation are pending verified M4 Pro results.
+![Median latency across six context lengths, with a second panel comparing single and split schedules at 64 and 4,096 tokens in the pilot and sweep.](../analysis/attention-preliminary.svg)
+
+| Isolated global attention, median wall time | Compiled MLX | Staged Metal | Hybrid | Single dispatch | Split context |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Batch 1, 64 tokens | 412 µs | 223 µs | 329 µs | 225 µs | 210 µs |
+| Batch 1, 4,096 tokens | 490 µs | 2,132 µs | 456 µs | 2,840 µs | 436 µs |
+| Batch 8, 4,096 tokens | 1,678 µs | 3,128 µs | 1,643 µs | 3,588 µs | — |
+
+Each cell summarizes 100 synchronized, paired trials across two input states in the first sweep. At 64 tokens, the split control’s advantage over single dispatch was small enough that the sweep’s 95% interval included a tie. At 4,096, the split scan exposed 1,024 independent threadgroups where the single dispatch exposed eight. The native command-buffer times also fell from 2,678 to 278 µs, so host launch overhead alone cannot explain the long-context result. Measuring how busy the GPU cores were requires a hardware trace. [Trial intervals, pilot medians and raw measurements](../analysis/attention-preliminary.md)
+
+The two-layer run stopped at its first correctness check. Four of 3,456 entries in the global layer’s expert-output history exceeded the registered tolerance at 64 tokens. A CPU control showed that changing just the projection accumulation can also push this intermediate past tolerance while both expert routes and the final residual pass. The cause of the four GPU differences is still open. End-to-end latencies will depend on the time spent in projections, routing and experts as well as the attention scan. [CPU sensitivity experiment](../decoder/README.md)

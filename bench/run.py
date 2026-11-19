@@ -59,6 +59,26 @@ def randomized_order(methods, rng):
     return order
 
 
+class ParityError(AssertionError):
+    def __init__(self, case, seed, fixture, method, phase, actual, error):
+        self.context = dict(case=case.name, seed=seed, fixture=fixture, method=method, phase=phase)
+        self.readback = None
+        if case.scope == "stack":
+            # Own the failed readback before native or MLX scratch buffers are released.
+            self.readback = {key: np.array(value, copy=True) for key, value in actual.items()}
+        super().__init__(f"{case.name} {phase}, fixture {fixture}, seed {seed}, {method}: {error}")
+
+
+def check_step(case, seed, fixture, method, phase, runner, check):
+    runner.reset()
+    runner.step()
+    actual = runner.read()
+    try:
+        return check(actual)
+    except (AssertionError, ValueError) as error:
+        raise ParityError(case, seed, fixture, method, phase, actual, error) from error
+
+
 def run_case(case, session, seed, trials, warmups):
     rows, parity = [], {}
     sequence = int.from_bytes(hashlib.sha256((session+"/"+case.name).encode()).digest()[:8],"big")
@@ -74,10 +94,9 @@ def run_case(case, session, seed, trials, warmups):
             prepared.append((runners, check))
             parity[fixture] = {}
             for method in randomized_order(case.methods, rng):
-                runner = runners[method]
-                runner.reset()
-                runner.step()
-                parity[fixture][method] = check(runner.read())
+                parity[fixture][method] = check_step(
+                    case, seed + fixture, fixture, method, "before timing", runners[method], check
+                )
         for _ in range(warmups):
             for runners, _check in prepared:
                 for method in randomized_order(case.methods, rng):
@@ -104,11 +123,9 @@ def run_case(case, session, seed, trials, warmups):
                                      order=order,method=method,wall_us=wall,
                                      native_gpu_us=gpu,encoded_dispatches=count))
         # Detect broken reset semantics, accidental cache growth and late errors.
-        for runners, check in prepared:
-            for runner in runners.values():
-                runner.reset()
-                runner.step()
-                check(runner.read())
+        for fixture, (runners, check) in enumerate(prepared):
+            for method, runner in runners.items():
+                check_step(case, seed + fixture, fixture, method, "after timing", runner, check)
     return rows, parity
 
 
@@ -149,6 +166,23 @@ def refresh_tracker(enabled):
         print(f"Could not refresh tracker: {error}", file=sys.stderr)
 
 
+def measure(case, args, machine, folder):
+    try:
+        return run_case(case, args.session, args.seed, args.trials, args.warmups)
+    except ParityError as exc:
+        if exc.readback is None:
+            raise
+        context, readback, message = exc.context, exc.readback, str(exc)
+    # Leaving the handler releases the traceback and the prepared benchmark runners.
+    from .diagnose_stack import diagnose
+    diagnostic = folder / f"{case.name}-fixture{context['fixture']}.diagnostic.json"
+    try:
+        diagnose(case, context["seed"], machine, diagnostic, original=(context, readback))
+    except Exception as exc:
+        raise AssertionError(f"{message}\nDiagnostic replay failed: {exc}") from exc
+    raise AssertionError(f"{message}\nDiagnostic replay: {diagnostic}")
+
+
 def execute(args):
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,63}", args.session):
         raise ValueError("Invalid session label")
@@ -182,7 +216,7 @@ def execute(args):
                     print("Verified existing", case.name, flush=True)
                     continue
                 print("Measuring", case.name, flush=True)
-                rows, parity = run_case(case, args.session, args.seed, args.trials, args.warmups)
+                rows, parity = measure(case, args, machine, folder)
                 save_case(folder, case, rows, parity)
                 refresh_tracker(args.update_tracker)
             if source_hash() != machine["sources_sha256"]:

@@ -8,6 +8,8 @@ This repository compares compiled MLX, staged Metal, hybrid Metal/MLX and single
 
 The independent CPU prefilling and incremental decoding implementations have been checked at the published head geometry. At 64 successive tokens, the maximum absolute gated-output difference was 0.0009765625. The connected decoder completed CPU forward passes at visible lengths 64 and 4,096 with both full expert banks allocated. See the [decoder smoke checks](decoder/cpu-smoke.json) and [standalone progress page](dist/index.html) for the evidence and GPU run status.
 
+The first M4 Pro sweep certified all seven isolated attention cases. At batch one and 4,096 tokens, the single-dispatch implementation took 2,840 µs and the split-context control took 436 µs. The pilot measured 2,861 and 453 µs. The first stack precheck stopped on four elements in the second layer’s expert-output history. Both runs used benchmark source from commit `29cf099`. Their original CSVs, parity certificates and manifests are included under `results/`. [Measured table and figure](analysis/attention-preliminary.md)
+
 ## Run on an Apple-silicon Mac
 
 Use a local macOS session with working Metal access, Xcode command-line tools, and uv or Python 3.11–3.13. The reference storage precision is FP16 and reductions use FP32. Dependencies are pinned in [requirements-mac.txt](requirements-mac.txt). Runtime shader compilation is used on the GPU.
@@ -19,7 +21,9 @@ From the root of the checkout:
 ./mac-run study
 ```
 
-The probe compiles a native host program, dispatches 128 threads using 22 KiB of threadgroup storage, and checks every output. The study command creates a project-local Python environment, runs the tests, then runs the two-point pilot and two full timing sessions in separate processes. Each method must match the CPU oracle before a cell is timed. A failure leaves already checked cells available for inspection. Use a stable label such as `./mac-run study m4pro-01` to resume the same run after interruption. Remote changes to configs or source require a new label. Each suite records the environment, including power state and available thermal data.
+The probe dispatches 128 threads using 22 KiB of threadgroup storage and checks every output. The study runs the tests and pilot, then replays all four schedules on each of the two stack fixtures at 64 and 4,096 tokens. For a failed fixture, the replay records the affected schedule, observable, coordinate, and a stage-by-stage comparison using the actual inputs to the first failing schedule. It then measures two independent attention sessions and writes `results/report-attention/`. If the stack checks pass, the study also measures both stack sessions and produces the combined report. Each timed cell still has to pass the CPU comparison before and after timing.
+
+To continue from the first M4 Pro attempt with the new diagnostics, use `./mac-run study m4pro-02`. Reuse that label to resume interrupted work on the same code revision. Once the benchmark source or environment changes, use a fresh label. The study records the environment, power state and available thermal data for each suite. Its HTML tracker refreshes on disk as each case or diagnostic completes.
 
 For just the two-point pilot:
 

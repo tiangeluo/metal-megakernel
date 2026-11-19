@@ -1,8 +1,26 @@
 #!/bin/sh
 set -eu
 cd "$(dirname "$0")"
+export MPLCONFIGDIR="${MPLCONFIGDIR:-$PWD/build/mpl-cache}"
+mkdir -p "$MPLCONFIGDIR"
+probe() {
+    mkdir -p results
+    snapshot=$(mktemp results/probe.XXXXXXXX)
+    if python3 scripts/environment.py --out "$snapshot"; then
+        mv "$snapshot" results/host-probe.json
+    else
+        mv "$snapshot" results/last-failed-probe.json
+        return 2
+    fi
+}
 render() {
-    if [ -x .venv/bin/python ]; then .venv/bin/python tracker/render.py; else python3 tracker/render.py; fi
+    if [ -x .venv/bin/python ]; then
+        .venv/bin/python tracker/render.py
+    elif python3 -c 'import numpy' >/dev/null 2>&1; then
+        python3 tracker/render.py
+    else
+        echo "The included tracker is available in dist/index.html. The study installs its reporting dependencies."
+    fi
 }
 setup() {
     if [ ! -x .venv/bin/python ]; then
@@ -27,24 +45,19 @@ case "${1:-}" in
   connect)
     python3 scripts/link_tracker.py
     trap render EXIT
-    python3 scripts/environment.py --out results/host-probe.json
+    probe
     ;;
   probe)
     trap render EXIT
-    python3 scripts/environment.py --out results/host-probe.json
+    probe
     ;;
   pilot|full|study)
     trap render EXIT
-    python3 scripts/environment.py --out results/host-probe.json
+    probe
     setup
     name=${2:-$(date -u +%Y%m%dT%H%M%SZ)}
     if [ "$1" = study ]; then
-      .venv/bin/python -m pytest -q
-      run_suite pilot "$name-pilot"
-      run_suite full "$name-a"
-      run_suite full "$name-b"
-      .venv/bin/python -m bench.report --input results --out results/report --sessions "$name-a" "$name-b"
-      echo "Timings and repeat-session report written under results/. Review dispatches using bench/README.md."
+      .venv/bin/python -m scripts.study "$name"
     else
       run_suite "$1" "$name"
     fi

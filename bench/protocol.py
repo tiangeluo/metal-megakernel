@@ -107,6 +107,22 @@ def compare_attention(expected, measured, original, position):
     return errors
 
 
+def stack_regions(name, expected, actual, position):
+    """Yield the exact slices and tolerances used to certify one stack output."""
+    a, b = np.asarray(expected), np.asarray(actual)
+    if a.shape != b.shape:
+        raise ValueError(f"{name} shape changed: {a.shape} vs {b.shape}")
+    if name.endswith(("cache_k", "cache_v")):
+        slot = position % a.shape[2]
+        for label, region in (("before slot", slice(None, slot)), ("after slot", slice(slot+1, None))):
+            yield label, a[:, :, region], b[:, :, region], 0.0, 0.0
+        yield "written slot", a[:, :, slot], b[:, :, slot], 2e-3, 2e-3
+    elif a.dtype.kind in "uib":
+        yield "all", a, b, 0.0, 0.0
+    else:
+        yield "all", a, b, 2e-3, 1e-2
+
+
 def equal_stack(expected, actual, position):
     if not isinstance(expected, dict) or expected.keys() != actual.keys():
         raise ValueError("Stack observable dictionaries differ")
@@ -114,14 +130,6 @@ def equal_stack(expected, actual, position):
         raise ValueError("Empty stack observable")
     errors = {}
     for k, v in expected.items():
-        a, b = np.asarray(v), np.asarray(actual[k])
-        if a.shape != b.shape:
-            raise ValueError(f"{k} shape changed")
-        if k.endswith(("cache_k", "cache_v")):
-            slot = position % a.shape[2]
-            for region in (slice(None, slot),slice(slot+1,None)):
-                compare_array(k+" untouched", a[:,:,region], b[:,:,region], 0, 0)
-            errors[k] = compare_array(k,a[:,:,slot],b[:,:,slot],2e-3,2e-3)
-        else:
-            errors[k] = compare_array(k,a,b)
+        for label, reference, measured, atol, rtol in stack_regions(k, v, actual[k], position):
+            errors[k] = compare_array(f"{k} ({label})", reference, measured, atol, rtol)
     return errors
