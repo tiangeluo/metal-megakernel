@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Megakernels on a Mac</title>
+  <title>Studying Megakernels on a Mac</title>
   <style>
 
 code{white-space: pre-wrap;}
@@ -48,7 +48,7 @@ table { display: block; overflow-x: auto; }
 </style>
 </head>
 <body>
-<h1 id="megakernels-on-a-mac">Megakernels on a Mac</h1>
+<h1 id="studying-megakernels-on-a-mac">Studying Megakernels on a Mac</h1>
 <p>A GPU can have plenty of arithmetic capacity and still wait for work. Between one kernel and the next, an intermediate may need to be written to memory, a dependent dispatch must become runnable, and different parts of the GPU may finish at different times. A megakernel moves some of that scheduling inside a single dispatch. The operating-system analogy helps explain the motivation. While one group of workers waits for data, another can advance an independent part of the computation.</p>
 <p>Flapping Airplanes describes an instruction-driven Kittens Virtual Machine that can schedule training, inference and a game inside a persistent kernel. LMSYS chose a narrower boundary for Muse Spark Open. Its megakernel spans one layer&#39;s attention through the next layer&#39;s QKV projection and KV write. LMSYS reports 1,109 versus 517 tokens/s for a batch-one comparison on eight GB300s. Those are serving-system results with speculative decoding. On my MacBook, I wanted to isolate a scheduling decision I could actually measure. <a href="https://x.com/flappyairplanes/status/2112955825367269788">Flapping Airplanes</a> · <a href="https://www.lmsys.org/blog/2026-11-05-muse-spark-open-ultrafast">LMSYS</a></p>
 <h2 id="one-token-writes-what-it-is-about-to-read">One token writes what it is about to read</h2>

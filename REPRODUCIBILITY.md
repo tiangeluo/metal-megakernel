@@ -1,4 +1,4 @@
-# Reproducing Megakernels on a Mac
+# Reproduction guide for *Studying Megakernels on a Mac*
 
 The article reports **6,000 isolated-attention timings** from `m4pro-02-a/b` and **1,600 two-layer timings** from `precision-control-01/a,b`. The repository contains each trial, the parity certificates and the code that computes the medians and paired bootstrap intervals.
 
