@@ -9,8 +9,8 @@ from pathlib import Path
 import tempfile
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from tracker.measurements import diagnostic_reports, final_report, followup_status, preliminary_figure, read_runs, repeated_figure
-from tracker.precision import precision_panel
+from tracker.measurements import diagnostic_reports, final_report, followup_status, inspected_trace_rows, preliminary_figure, read_runs, repeated_figure, retry_trace_status
+from tracker.precision import precision_panel, precision_results
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -84,7 +84,7 @@ def replay_markup(records):
     if paired and len(matched_checks) == len(paired) and len(set(matched_checks)) == 1:
         notes.append(f"All {matched_checks[0]} local checks on the compiled path passed for each failing fixture "
                      "when NumPy received the same stage inputs. The source of the end-to-end difference remains open.")
-    return ('<h3 class="subhead">Two-layer GPU correctness</h3><p class="note">Each row replays one fixed token through '
+    return ('<h3 class="subhead">Original FP16 expert stack</h3><p class="note">Each row replays one fixed token through '
             'both layers. Pass means that every registered output agreed with the CPU reference within its tolerance. '
             'Fractions count entries outside tolerance in the global layer’s expert-output history.</p>'
             '<div class="scroll"><table><thead><tr><th>Visible tokens</th><th>Seed</th><th>Compiled MLX</th>'
@@ -139,6 +139,8 @@ def render():
             set_state(tasks[title], state, evidence)
     diagnostic_html = replay_markup(diagnostics)
     parent = next((r for r in cohort if r.name == "m4pro-02-a" and r.suite == "attention" and r.status == "complete"), None)
+    precision_cells, precision_source, precision_note = precision_results(RESULTS)
+    trace_path, trace_methods = retry_trace_status(RESULTS, parent)
     if diagnostics and parent:
         status, outcomes = followup_status(RESULTS, parent)
         table = ""
@@ -210,12 +212,57 @@ def render():
                   "The compatible sessions are complete. Review thermal conditions, per-session rankings and trace coverage.")
         set_state(tasks["Render the figure and results table"], "Complete",
                   "The independent-session report generated the plotted latency intervals and table from verified trials.")
+    if precision_cells:
+        set_state(tasks["Time the connected two-layer stack"], "Complete",
+                  "Two independent sessions timed the connected decoder at both lengths with FP32 expert arithmetic. "
+                  "The original FP16 expert stack exceeded tolerance and has no verified latency.")
+        if attention_report or report:
+            summary = "Attention and two-layer control measured"
+            set_state(tasks["Repeat and audit the measurements"], "Complete",
+                      "Attention and the FP32 expert control each have two verified sessions, paired timing blocks and confidence intervals. "
+                      "The original stack’s failed fixtures are preserved.")
+            set_state(tasks["Write the post and prepare the code link"], "In progress",
+                      "The article draft and source include the measured workloads and the original parity limitation. "
+                      "Homepage publication and the public repository link are pending.")
+            combined_figure = repeated_figure(ROOT / "analysis/decoder-performance.svg", cohort, names, precision_source)
+            if combined_figure:
+                figure = combined_figure
+                set_state(tasks["Render the figure and results table"], "Complete",
+                          "The primary figure and table use verified raw observations from both workloads.")
+    dispatch_note = ("Native code encodes three dispatches for staged Metal, one for single-dispatch Metal and four "
+                     "for the split control. Framework dispatch counts require inspection of the marked interval.")
+    if trace_methods:
+        methods = ", ".join(sorted(trace_methods))
+        dispatch_note += (f" Instruments recorded {len(trace_methods)} parity-checked long-context captures ({methods}). "
+                          "The dispatches inside the marked decode intervals await inspection.")
+        set_state(tasks["Check the parallelism explanation"], "In progress",
+                  f"Captured {len(trace_methods)} schedules at batch one and 4,096 tokens. "
+                  "Threadgroup geometry and GPU times are documented. Achieved occupancy requires trace evidence.")
+    inspected = inspected_trace_rows(RESULTS, trace_path, trace_methods)
+    if len(inspected) == 4 and all(r["command_buffers"] == r["compute_encoders"] == r["gpu_compute_intervals"] == 1
+                                   and r["observed_dispatches"] is None for r in inspected.values()):
+        dispatch_note = ("We inspected four separate Instruments captures at batch one and 4,096 tokens. Each marked "
+                         "decode step contained one command buffer, one compute encoder and one GPU compute interval. "
+                         "Operations can share an encoder. These traces leave individual dispatch counts and occupancy unresolved. "
+                         "The native code submits one dispatch for single, three for staged and four for split.")
+        set_state(tasks["Build the compiled MLX baseline"], "Complete",
+                  "The compiled MLX attention schedule passed both endpoint checks. Its trace resolves one compute "
+                  "encoder. The internal SDPA shader and dispatch count remain unverified.")
+        set_state(tasks["Check the parallelism explanation"], "Complete",
+                  "The split scan exposes more parallel work at long context. Reviewed four marked traces plus "
+                  "native command-buffer timings. The trace granularity leaves achieved occupancy unresolved.")
+        if precision_cells and (attention_report or report):
+            summary = "Experiments complete · article drafted"
     table_rows = []
-    for scope, batch, length in (("attention",1,64), ("attention",1,4096), ("attention",8,4096),
-                                  ("stack",1,64), ("stack",1,4096)):
+    display_rows = [("attention", 1, n, "Global attention", cells) for n in (64, 4096)]
+    display_rows.append(("attention", 8, 4096, "Global attention", cells))
+    if report or not precision_cells:
+        display_rows.extend(("stack", 1, n, "Two-layer decoder · FP16 experts", cells) for n in (64, 4096))
+    if precision_cells:
+        display_rows.extend(("stack", 1, n, "Two-layer decoder · FP32 expert arithmetic", precision_cells) for n in (64, 4096))
+    for scope, batch, length, label, values in display_rows:
         case = f"{scope}-b{batch}-l{length}"
-        label = "Global attention" if scope == "attention" else "Two-layer stack"
-        vals = [f'<td>{cells[case,m]:,.1f}</td>' if (case,m) in cells else '<td class="na">—</td>'
+        vals = [f'<td>{values[case,m]:,.1f}</td>' if (case,m) in values else '<td class="na">—</td>'
                 for m in ("compiled", "staged", "hybrid", "single", "split")]
         table_rows.append(f'<tr><td>{label}</td><td>{batch}</td><td>{length:,}</td>'+''.join(vals)+'</tr>')
     if headnote:
@@ -254,7 +301,8 @@ def render():
             "@@STATIC@@": ''.join(escaped_groups), "@@SUMMARY@@": summary,
             "@@COUNT@@": f"{done} of {len(items)} execution tasks complete", "@@STAMP@@":timestamp,
             "@@RESULT_LINKS@@":headnote, "@@RESULT_ROWS@@":"".join(table_rows),
-            "@@PERF_FIGURE@@": figure, "@@PRECISION@@":precision_panel(RESULTS), "@@CHECKPOINTS@@":proofbox}
+            "@@PERF_FIGURE@@": figure, "@@DISPATCHES@@":escape(dispatch_note),
+            "@@PRECISION@@":precision_panel(precision_note), "@@CHECKPOINTS@@":proofbox}
     page = (HERE / "template.html").read_text()
     for marker, value in repl.items():
         page = page.replace(marker,value)

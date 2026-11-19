@@ -95,12 +95,14 @@ def preliminary_figure(path, selected, runs):
         return ""
 
 
-def repeated_figure(path, runs, names):
-    """Attach the two-panel figure only when all source CSVs match the verified runs."""
+def repeated_figure(path, runs, names, control=None):
+    """Embed the figure only when every source recorded in it matches certified trials."""
     try:
         description = ET.parse(path).find(".//{http://purl.org/dc/elements/1.1/}description")
         provenance = json.loads(description.text) if description is not None else {}
         if sorted(provenance["sessions"]) != sorted(names) or set(provenance["case_sha256"]) != set(names):
+            return ""
+        if control is not None and (not control or any(provenance.get(k) != v for k, v in control.items())):
             return ""
         from bench.protocol import ATTENTION
         cases = {case.name for case in ATTENTION}
@@ -112,6 +114,10 @@ def repeated_figure(path, runs, names):
                     and all(digest == run.digests.get(case) for case, digest in digests.items())
                     for run in runs):
                 return ""
+        if control is not None:
+            return figure_markup(path, "Relative schedule performance at different context lengths in isolated attention and in two connected decoder layers.",
+                                 "Both workloads use synchronized wall time. Each comparison uses the compiled MLX "
+                                 "attention schedule within that workload. The connected decoder uses the FP32 expert control.")
         return figure_markup(path, "Attention latency across context lengths and the split-context control at the endpoints.",
                              f"Two independent M4 Pro sessions, {', '.join(names)}. Both panels use synchronized "
                              "wall time for a single decode step on the isolated global-attention path.")
@@ -268,7 +274,7 @@ def followup_status(results, parent):
             if traces:
                 details += f" {len(traces)} of 4 candidate Instruments traces await inspection."
             elif len(missing_mlx) == 4:
-                details += " All four Instruments targets stopped in preflight because Python could not import MLX. No dispatch counts were observed."
+                details += " The first Instruments attempt stopped on all four targets before GPU work because Python could not import MLX."
             elif state["trace_status"] == "unavailable or incomplete":
                 details += " Instruments capture was unavailable or incomplete."
             else:
@@ -277,3 +283,66 @@ def followup_status(results, parent):
         except (KeyError, OSError, TypeError, ValueError):
             continue
     return "The four GPU captures and Instruments traces are awaiting collection.", []
+
+
+def retry_trace_status(results, parent):
+    """The target checks and capture manifest establish collection, independently of counts."""
+    if parent is None:
+        return None, set()
+    retry = results / "attention-trace-retry"
+    for path in sorted(retry.glob("*/capture.json"), reverse=True):
+        try:
+            data = json.loads(path.read_text())
+            env_bytes = (retry / "environment.json").read_bytes()
+            env = json.loads(env_bytes)
+            machine = parent.spec["machine"]
+            if (data["case"] != "attention-b1-l4096" or data["marker"] != "Decode step"
+                    or data["environment_sha256"] != hashlib.sha256(env_bytes).hexdigest()
+                    or env["gpu_probe"]["passed"] is not True
+                    or env["gpu_probe"]["device"] != machine["device"]
+                    or env["packages"]["mlx"] != machine["mlx"]):
+                continue
+            methods = set()
+            for method in ("compiled", "hybrid", "single", "split"):
+                row = data["captures"].get(method, {})
+                if (row.get("status") == "awaiting_inspection" and row.get("xctrace_exit") == 0
+                        and row.get("target_parity_passed") is True and row.get("bundle_present") is True
+                        and row.get("trace") == method+".trace" and row.get("toc") == method+".toc.xml"
+                        and row.get("target_packages", {}).get("mlx") == machine["mlx"]
+                        and {"metal-application-command-buffer-submissions", "os-signpost"} <= set(row.get("table_schemas", []))):
+                    methods.add(method)
+            return path, methods
+        except (KeyError, OSError, TypeError, ValueError):
+            continue
+    return None, set()
+
+
+def inspected_trace_rows(results, capture, methods):
+    if not capture or not methods:
+        return {}
+    try:
+        evidence = json.loads((results.parent / "analysis/trace-observations.json").read_text())
+        environment = capture.parent.parent / "environment.json"
+        if (evidence["session"] != capture.parent.name or evidence["case"] != "attention-b1-l4096"
+                or evidence["capture_manifest_sha256"] != hashlib.sha256(capture.read_bytes()).hexdigest()
+                or evidence["environment_sha256"] != hashlib.sha256(environment.read_bytes()).hexdigest()):
+            return {}
+        inspected = {}
+        for method in methods:
+            row = evidence["methods"][method]
+            start, end = row["marker_ns"]
+            spans = row["gpu_spans_ns"]
+            if (row["pid"] <= 0 or start >= end or not spans
+                    or not all(start <= a < b <= end for a, b in spans)
+                    or row["command_buffers"] != len(set(row["buffer_ids"]))
+                    or row["compute_encoders"] != len(set(row["encoder_ids"]))
+                    or row["gpu_compute_intervals"] != len(spans)
+                    or row["active_compute_ns"] != sum(b - a for a, b in spans)):
+                continue
+            toc = capture.parent / (method + ".toc.xml")
+            if toc.exists() and hashlib.sha256(toc.read_bytes()).hexdigest() != row["toc_sha256"]:
+                continue
+            inspected[method] = row
+        return inspected
+    except (KeyError, OSError, TypeError, ValueError):
+        return {}

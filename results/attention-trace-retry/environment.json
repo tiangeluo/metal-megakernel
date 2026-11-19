@@ -1,0 +1,49 @@
+{
+  "arch": "arm64",
+  "gpu_probe": {
+    "apple9": true,
+    "device": "Apple M4 Pro",
+    "execution_width": 32,
+    "max_threads_per_group": 1024,
+    "passed": true,
+    "thermal_state": 0,
+    "threadgroup_bytes_used": 22528,
+    "threadgroup_memory_limit": 32768,
+    "verified_outputs": 128
+  },
+  "hardware": {
+    "Chip": [
+      "Apple M4 Pro"
+    ],
+    "Chipset Model": [
+      "Apple M4 Pro"
+    ],
+    "Memory": [
+      "48 GB"
+    ],
+    "Model Identifier": [
+      "Mac16,7"
+    ],
+    "Model Name": [
+      "MacBook Pro"
+    ],
+    "Total Number of Cores": [
+      "14 (10 Performance and 4 Efficiency)",
+      "20"
+    ]
+  },
+  "macos": "26.6.2",
+  "offline_metal_compiler": false,
+  "packages": {
+    "matplotlib": "3.10.6",
+    "mlx": "0.32.4",
+    "mlx-metal": "0.32.4",
+    "numpy": "2.3.5",
+    "pytest": "8.4.2"
+  },
+  "platform": "Darwin",
+  "power": "Now drawing from 'AC Power'",
+  "python": "3.13.9",
+  "recorded_utc": "2026-11-19T02:28:01.516900+00:00",
+  "xcode": "Xcode 26.6\nBuild version 17F113"
+}

@@ -42,6 +42,18 @@ run_suite() {
     .venv/bin/python -m bench.run --suite "$1" --session "$2" --out results --environment results/environment.json --update-tracker
 }
 case "${1:-}" in
+  report)
+    py=python3
+    if [ -x .venv/bin/python ]; then py=.venv/bin/python; fi
+    "$py" -m diagnostics.precision_study --report-only --out results/precision-control-01
+    "$py" -m analysis.verified
+    "$py" -m analysis.decoder_performance
+    "$py" tracker/render.py
+    if command -v pandoc >/dev/null 2>&1; then
+        (cd docs && pandoc article.md --from=gfm --standalone --embed-resources \
+            --css=article.css --metadata pagetitle="Megakernels on a Mac" --wrap=none -o article.html)
+    fi
+    ;;
   connect)
     python3 scripts/link_tracker.py
     trap render EXIT
@@ -74,5 +86,5 @@ case "${1:-}" in
       run_suite "$1" "$name"
     fi
     ;;
-  *) echo "Usage: ./mac-run connect | probe | pilot [session] | full [session] | study [study-name] | followup | precision" >&2; exit 64 ;;
+  *) echo "Usage: ./mac-run connect | probe | pilot [session] | full [session] | study [study-name] | followup | precision | report" >&2; exit 64 ;;
 esac

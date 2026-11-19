@@ -1,0 +1,23 @@
+:root {
+  color-scheme: light;
+  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1d2c35;
+  background: #fff;
+}
+body { max-width: 54rem; margin: 4rem auto; padding: 0 clamp(1rem, 4vw, 3rem); line-height: 1.6; }
+h1, h2, h3 { line-height: 1.15; letter-spacing: -.025em; }
+h1 { font-size: clamp(2.3rem, 7vw, 3.75rem); }
+h2 { margin-top: 2em; }
+p { max-width: 48rem; }
+a { color: #075e69; text-underline-offset: .14em; }
+img, svg { display: block; width: 100%; height: auto; margin: 2rem auto; }
+figure { margin: 2rem 0; }
+figcaption { font-size: .92rem; color: #465762; }
+table { border-collapse: collapse; font-size: .95rem; font-variant-numeric: tabular-nums; margin: 1.5rem 0; }
+th, td { padding: .45rem .65rem; border-bottom: 1px solid #d9e0e3; }
+th { background: #f0f5f5; }
+@media (max-width: 42rem) {
+  body { margin: 2rem auto; }
+  table { display: block; overflow-x: auto; }
+}
+@media print { body { max-width: none; margin: 0; } figure, table { break-inside: avoid; } }
