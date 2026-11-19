@@ -31,6 +31,10 @@ The completed `m4pro-02` attention sessions and all four decoder diagnostic reco
 
 Use `./mac-run followup` on the Mac to investigate the original stack discrepancy. It captures the incoming residual and gated attention heads at layer 11 for NumPy, compiled MLX and staged Metal, then swaps the sources independently and reruns the same expert calculation. Each capture must reproduce the original wrapper outputs exactly. The command covers the failing seed and passing control at both lengths, saves small arrays for offline analysis, and attempts a separate long-context Instruments capture for four attention schedules. Trace collection has its own status. The results directory printed at launch holds the evidence, separately from the timing sessions. This follow-up does not repeat the attention sweeps.
 
+The original crossover is complete. The captured incoming residual alone reproduced expert-output discrepancies at both tested lengths. The follow-on control keeps the expert weights in FP16 and performs the expert computation in FP32. On the recorded inputs, all 12 pairwise CPU comparisons of the control’s layer-11 expert output passed the original tolerance. A full connected CPU replay under an alternate projection summation order passed all 15 checks on both seeds and lengths. The control uses a different expert projection kernel, so any certified latency describes that implementation. [Crossover results](analysis/crossover-results.md) · [Captured-input precision replay](analysis/moe-precision-replay.json) · [Connected CPU replay](analysis/precision-sensitivity.json)
+
+From a Metal-visible terminal, run `./mac-run precision` for the next round. It checks the new GPU projection against a CPU reference, validates the four connected schedules, and writes a separate report under `results/precision-control-01/` after two compatible sessions pass. It also retries the original isolated attention traces with the project’s MLX environment. The trace captures run after timing. Refresh `dist/index.html` when the command finishes.
+
 For just the two-point pilot:
 
 ```sh

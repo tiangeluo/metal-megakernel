@@ -10,6 +10,7 @@ import tempfile
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tracker.measurements import diagnostic_reports, final_report, followup_status, preliminary_figure, read_runs, repeated_figure
+from tracker.precision import precision_panel
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -139,11 +140,18 @@ def render():
     diagnostic_html = replay_markup(diagnostics)
     parent = next((r for r in cohort if r.name == "m4pro-02-a" and r.suite == "attention" and r.status == "complete"), None)
     if diagnostics and parent:
-        status = followup_status(RESULTS, parent)
+        status, outcomes = followup_status(RESULTS, parent)
+        table = ""
+        if outcomes:
+            rows = "".join(f"<tr><td>{seed}</td><td>{length:,}</td><td>{rc} / {rs}</td><td>{hc} / {hs}</td></tr>"
+                           for seed, length, (rc, rs, hc, hs) in outcomes)
+            table = ('<p>Each cell counts expert channels outside tolerance for compiled MLX / staged Metal.</p>'
+                     '<div class="scroll"><table><thead><tr><th>Seed</th><th>Tokens</th><th>GPU residual only</th>'
+                     f'<th>GPU heads only</th></tr></thead><tbody>{rows}</tbody></table></div>')
         diagnostic_html += ('<div class="callout"><b>Layer 11 crossover</b><p>The replay swaps the incoming residual '
                             'and attention heads independently between CPU, compiled MLX and staged Metal. The same CPU '
                             'layer finish evaluates all nine input pairs to test which input carries the drift.</p>'
-                            f'<p>{escape(status)}</p></div>')
+                            f'{table}<p>{escape(status)}</p></div>')
     if replay_failed:
         set_state(tasks["Time the connected two-layer stack"], "Blocked",
                   "A replay exceeded the registered numerical tolerance. The table above identifies the affected seed, length and schedules.")
@@ -246,7 +254,7 @@ def render():
             "@@STATIC@@": ''.join(escaped_groups), "@@SUMMARY@@": summary,
             "@@COUNT@@": f"{done} of {len(items)} execution tasks complete", "@@STAMP@@":timestamp,
             "@@RESULT_LINKS@@":headnote, "@@RESULT_ROWS@@":"".join(table_rows),
-            "@@PERF_FIGURE@@": figure, "@@CHECKPOINTS@@":proofbox}
+            "@@PERF_FIGURE@@": figure, "@@PRECISION@@":precision_panel(RESULTS), "@@CHECKPOINTS@@":proofbox}
     page = (HERE / "template.html").read_text()
     for marker, value in repl.items():
         page = page.replace(marker,value)

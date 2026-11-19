@@ -1,0 +1,32 @@
+{
+  "followup": "m4pro-02-followup-20261119T020918Z-tf3imdmi",
+  "case": "attention-b1-l4096",
+  "source_sha256": "f807d8a4329016e1d365e31fefd3a44796f7442ccb80d4b1f50d227acc706237",
+  "capture_sha256": "652c0acf4fa5f5e70f6c9e930e827a42b385ca3d7229d4ac17ffa7f0bcec6ac0",
+  "methods": {
+    "compiled": {
+      "target_log_sha256": "2a44cae7f2922d36cb93e01db929d1d13d51a6af1945e8633a0c6bef442f9e5b",
+      "failure": "ModuleNotFoundError: No module named 'mlx'",
+      "phase": "preflight",
+      "xctrace_exit": 54
+    },
+    "hybrid": {
+      "target_log_sha256": "2a44cae7f2922d36cb93e01db929d1d13d51a6af1945e8633a0c6bef442f9e5b",
+      "failure": "ModuleNotFoundError: No module named 'mlx'",
+      "phase": "preflight",
+      "xctrace_exit": 54
+    },
+    "single": {
+      "target_log_sha256": "2a44cae7f2922d36cb93e01db929d1d13d51a6af1945e8633a0c6bef442f9e5b",
+      "failure": "ModuleNotFoundError: No module named 'mlx'",
+      "phase": "preflight",
+      "xctrace_exit": 54
+    },
+    "split": {
+      "target_log_sha256": "2a44cae7f2922d36cb93e01db929d1d13d51a6af1945e8633a0c6bef442f9e5b",
+      "failure": "ModuleNotFoundError: No module named 'mlx'",
+      "phase": "preflight",
+      "xctrace_exit": 54
+    }
+  }
+}

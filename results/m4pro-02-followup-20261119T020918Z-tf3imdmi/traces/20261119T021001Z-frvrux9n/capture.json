@@ -1,0 +1,45 @@
+{
+  "case": "attention-b1-l4096",
+  "template": "Metal System Trace",
+  "marker": "Decode step",
+  "captures": {
+    "single": {
+      "trace": "single.trace",
+      "target_log": "single.stdout",
+      "tool_log": "single.log",
+      "status": "incomplete",
+      "xctrace_exit": 54,
+      "target_parity_passed": false,
+      "bundle_present": true
+    },
+    "split": {
+      "trace": "split.trace",
+      "target_log": "split.stdout",
+      "tool_log": "split.log",
+      "status": "incomplete",
+      "xctrace_exit": 54,
+      "target_parity_passed": false,
+      "bundle_present": true
+    },
+    "compiled": {
+      "trace": "compiled.trace",
+      "target_log": "compiled.stdout",
+      "tool_log": "compiled.log",
+      "status": "incomplete",
+      "xctrace_exit": 54,
+      "target_parity_passed": false,
+      "bundle_present": true
+    },
+    "hybrid": {
+      "trace": "hybrid.trace",
+      "target_log": "hybrid.stdout",
+      "tool_log": "hybrid.log",
+      "status": "incomplete",
+      "xctrace_exit": 54,
+      "target_parity_passed": false,
+      "bundle_present": true
+    }
+  },
+  "status": "incomplete",
+  "environment": "/Users/tiangeluo/Documents/Codex/2026-11-18/new-chat-3/metal-megakernel/results/m4pro-02-followup-20261119T020918Z-tf3imdmi/environment.json"
+}

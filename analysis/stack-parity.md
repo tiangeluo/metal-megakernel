@@ -31,4 +31,6 @@ The JSON reports the number of failing channels for every pair and the channel v
 
 The crossover also exposes the selected expert inputs, route weights, gate/up projections, activations and down projections. It compares this decomposed expert computation against the observed production output. Using the decomposed graph’s inputs, it recomputes all eight gate/up projections and the down projections at the offending channels with FP64 accumulation, followed by the registered FP16 cast. The JSON includes the eight signed contributions per channel and their absolute sum so cancellation is measurable. The GPU readbacks and these diagnostic recomputations run outside timed trials.
 
+All four M4 Pro crossover captures reproduced the original wrapper outputs. Substituting the incoming GPU residual alone produced out-of-tolerance channels at both lengths on seed 20261118. All eight substitutions using only the GPU attention heads passed. Replaying the eight expert vectors with swapped router weights also passed when using CPU expert vectors. [Measured crossover and expert comparisons](crossover-results.md)
+
 [Four original M4 Pro replay records](../results/m4pro-02-diagnostics/) · [CPU projection sensitivity controls](../decoder/README.md) · [Elementwise acceptance rules](../bench/protocol.py)

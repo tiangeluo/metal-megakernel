@@ -197,12 +197,15 @@ def diagnostic_reports(results, latest):
 
 def followup_status(results, parent):
     """Count checksum-verified captures and candidate trace bundles for the latest follow-up."""
+    import numpy as np
+
     for path in sorted(results.glob("m4pro-02-followup-*/manifest.json"), reverse=True):
         try:
             state = json.loads(path.read_text())
-            if state["parent"] != parent.name or state["parent_machine"] != parent.spec["machine"]:
+            if (state["parent"] != parent.name or state["parent_machine"] != parent.spec["machine"]
+                    or state["machine"] != state["parent_machine"]):
                 continue
-            count = 0
+            outcomes = []
             for length in (64, 4096):
                 for seed in range(parent.spec["seed"], parent.spec["seed"] + parent.spec["fixtures"]):
                     tag = f"crossover-stack-b1-l{length}-seed{seed}"
@@ -217,27 +220,60 @@ def followup_status(results, parent):
                                 and record["sources_sha256"] == state["machine"]["sources_sha256"]
                                 and record["capture"] == archive.name and len(record["crossed_cpu_finish"]) == 9
                                 and hashlib.sha256(archive.read_bytes()).hexdigest() == record["capture_sha256"]):
-                            count += 1
+                            with np.load(archive, allow_pickle=False) as data:
+                                metadata = json.loads(data["metadata"].item())
+                                if any(record.get(k) != v for k, v in metadata.items()):
+                                    continue
+                                ref = data["cpu__moe"].astype(np.float32)
+                                counts = []
+                                for residual, heads in (("compiled", "cpu"), ("staged", "cpu"),
+                                                        ("cpu", "compiled"), ("cpu", "staged")):
+                                    key = f"residual_{residual}__heads_{heads}"
+                                    got = data[key].astype(np.float32)
+                                    if got.shape != ref.shape or not np.isfinite(got).all() or not np.isfinite(ref).all():
+                                        raise ValueError("Invalid expert output")
+                                    n = int(np.count_nonzero(np.abs(got - ref) > 0.002 + 0.01 * np.abs(ref)))
+                                    if n != record["crossed_cpu_finish"][key]["vs_cpu"]["violations"]:
+                                        raise ValueError("Crossover array differs from recorded count")
+                                    counts.append(n)
+                                outcomes.append((seed, length, counts))
                     except (KeyError, OSError, TypeError, ValueError):
                         continue
             traces = set()
+            missing_mlx = set()
             for index in (path.parent / "traces").glob("*/capture.json"):
                 trace = json.loads(index.read_text())
                 if trace.get("case") != "attention-b1-l4096":
                     continue
+                attestation = results.parent / "analysis/trace-preflight.json"
+                verified_errors = {}
+                if attestation.is_file():
+                    proof = json.loads(attestation.read_text())
+                    if (proof.get("followup") == path.parent.name and proof.get("case") == trace["case"]
+                            and proof.get("source_sha256") == state["machine"]["sources_sha256"]
+                            and proof.get("capture_sha256") == hashlib.sha256(index.read_bytes()).hexdigest()):
+                        verified_errors = proof["methods"]
                 for method in ("compiled", "hybrid", "single", "split"):
                     row = trace.get("captures", {}).get(method, {})
+                    observed = verified_errors.get(method, {})
+                    if (row.get("status") == "incomplete" and row.get("target_parity_passed") is False
+                            and observed.get("failure") == "ModuleNotFoundError: No module named 'mlx'"
+                            and observed.get("phase") == "preflight" and observed.get("xctrace_exit") == row.get("xctrace_exit")
+                            and len(observed.get("target_log_sha256", "")) == 64):
+                        missing_mlx.add(method)
                     if (row.get("status") == "awaiting_inspection" and row.get("target_parity_passed")
                             and row.get("trace") == f"{method}.trace" and (index.parent / row["trace"]).is_dir()):
                         traces.add(method)
-            details = f"{count} of 4 GPU captures have matching JSON and array-file checksums."
+            details = f"{len(outcomes)} of 4 GPU captures have matching JSON and array-file checksums."
             if traces:
                 details += f" {len(traces)} of 4 candidate Instruments traces await inspection."
+            elif len(missing_mlx) == 4:
+                details += " All four Instruments targets stopped in preflight because Python could not import MLX. No dispatch counts were observed."
             elif state["trace_status"] == "unavailable or incomplete":
                 details += " Instruments capture was unavailable or incomplete."
             else:
                 details += " Instruments capture is pending."
-            return details
+            return details, sorted(outcomes)
         except (KeyError, OSError, TypeError, ValueError):
             continue
-    return "The four GPU captures and Instruments traces are awaiting collection."
+    return "The four GPU captures and Instruments traces are awaiting collection.", []

@@ -1,0 +1,102 @@
+{
+  "device": "CPU",
+  "control": "fp32-moe-depth-and-experts-v1",
+  "fixtures": [
+    {
+      "length": 64,
+      "seed": 20261118,
+      "passed": true,
+      "observables": 15,
+      "failed": [],
+      "max_abs": {
+        "layer10_cache_k": 0.0,
+        "layer10_cache_v": 0.0,
+        "layer10_hist_k": 4.76837158203125e-07,
+        "layer10_hist_v": 3.0517578125e-05,
+        "layer10_post_attn": 0.0,
+        "layer10_post_moe": 0.00048828125,
+        "layer10_route_ids": 0.0,
+        "layer11_cache_k": 0.0009765625,
+        "layer11_cache_v": 0.0,
+        "layer11_hist_k": 0.0009765625,
+        "layer11_hist_v": 3.5762786865234375e-07,
+        "layer11_post_attn": 0.000244140625,
+        "layer11_post_moe": 0.001953125,
+        "layer11_route_ids": 0.0,
+        "summary": 0.0009765625
+      }
+    },
+    {
+      "length": 64,
+      "seed": 20261119,
+      "passed": true,
+      "observables": 15,
+      "failed": [],
+      "max_abs": {
+        "layer10_cache_k": 0.0,
+        "layer10_cache_v": 0.0,
+        "layer10_hist_k": 0.0,
+        "layer10_hist_v": 2.0265579223632812e-06,
+        "layer10_post_attn": 0.0,
+        "layer10_post_moe": 0.0009765625,
+        "layer10_route_ids": 0.0,
+        "layer11_cache_k": 0.0009765625,
+        "layer11_cache_v": 0.0001220703125,
+        "layer11_hist_k": 0.00048828125,
+        "layer11_hist_v": 0.00048828125,
+        "layer11_post_attn": 0.000244140625,
+        "layer11_post_moe": 0.00390625,
+        "layer11_route_ids": 0.0,
+        "summary": 0.001953125
+      }
+    },
+    {
+      "length": 4096,
+      "seed": 20261118,
+      "passed": true,
+      "observables": 15,
+      "failed": [],
+      "max_abs": {
+        "layer10_cache_k": 0.0,
+        "layer10_cache_v": 0.0,
+        "layer10_hist_k": 4.76837158203125e-07,
+        "layer10_hist_v": 3.0517578125e-05,
+        "layer10_post_attn": 3.0517578125e-05,
+        "layer10_post_moe": 0.0001220703125,
+        "layer10_route_ids": 0.0,
+        "layer11_cache_k": 0.0,
+        "layer11_cache_v": 0.0,
+        "layer11_hist_k": 7.62939453125e-06,
+        "layer11_hist_v": 0.0,
+        "layer11_post_attn": 3.0517578125e-05,
+        "layer11_post_moe": 0.00048828125,
+        "layer11_route_ids": 0.0,
+        "summary": 0.00048828125
+      }
+    },
+    {
+      "length": 4096,
+      "seed": 20261119,
+      "passed": true,
+      "observables": 15,
+      "failed": [],
+      "max_abs": {
+        "layer10_cache_k": 0.0,
+        "layer10_cache_v": 0.0,
+        "layer10_hist_k": 0.0,
+        "layer10_hist_v": 2.0265579223632812e-06,
+        "layer10_post_attn": 1.9073486328125e-06,
+        "layer10_post_moe": 0.00048828125,
+        "layer10_route_ids": 0.0,
+        "layer11_cache_k": 0.0009765625,
+        "layer11_cache_v": 0.001953125,
+        "layer11_hist_k": 0.0009765625,
+        "layer11_hist_v": 0.0009765625,
+        "layer11_post_attn": 4.57763671875e-05,
+        "layer11_post_moe": 0.001953125,
+        "layer11_route_ids": 0.0,
+        "summary": 0.0009765625
+      }
+    }
+  ]
+}
