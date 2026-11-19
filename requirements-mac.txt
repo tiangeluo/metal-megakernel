@@ -1,0 +1,5 @@
+numpy==2.3.5
+pytest==8.4.2
+matplotlib==3.10.6
+mlx==0.32.4
+mlx-metal==0.32.4

@@ -1,0 +1,53 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")"
+render() {
+    if [ -x .venv/bin/python ]; then .venv/bin/python tracker/render.py; else python3 tracker/render.py; fi
+}
+setup() {
+    if [ ! -x .venv/bin/python ]; then
+      if command -v uv >/dev/null 2>&1; then
+        uv venv --python 3.12 .venv
+      else
+        python3 -c 'import sys; assert (3,11) <= sys.version_info[:2] <= (3,13), "Use Python 3.11 through 3.13 or install uv."'
+        python3 -m venv .venv
+      fi
+    fi
+    if command -v uv >/dev/null 2>&1; then
+      uv pip install --python .venv/bin/python -r requirements-mac.txt
+    else
+      .venv/bin/python -m pip install -r requirements-mac.txt
+    fi
+}
+run_suite() {
+    .venv/bin/python scripts/environment.py --out results/environment.json
+    .venv/bin/python -m bench.run --suite "$1" --session "$2" --out results --environment results/environment.json --update-tracker
+}
+case "${1:-}" in
+  connect)
+    python3 scripts/link_tracker.py
+    trap render EXIT
+    python3 scripts/environment.py --out results/host-probe.json
+    ;;
+  probe)
+    trap render EXIT
+    python3 scripts/environment.py --out results/host-probe.json
+    ;;
+  pilot|full|study)
+    trap render EXIT
+    python3 scripts/environment.py --out results/host-probe.json
+    setup
+    name=${2:-$(date -u +%Y%m%dT%H%M%SZ)}
+    if [ "$1" = study ]; then
+      .venv/bin/python -m pytest -q
+      run_suite pilot "$name-pilot"
+      run_suite full "$name-a"
+      run_suite full "$name-b"
+      .venv/bin/python -m bench.report --input results --out results/report --sessions "$name-a" "$name-b"
+      echo "Timings and repeat-session report written under results/. Review dispatches using bench/README.md."
+    else
+      run_suite "$1" "$name"
+    fi
+    ;;
+  *) echo "Usage: ./mac-run connect | probe | pilot [session] | full [session] | study [study-name]" >&2; exit 64 ;;
+esac
