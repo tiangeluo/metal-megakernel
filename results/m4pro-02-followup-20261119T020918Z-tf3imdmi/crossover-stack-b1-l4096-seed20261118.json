@@ -1,0 +1,630 @@
+{
+  "batch": 1,
+  "capture": "crossover-stack-b1-l4096-seed20261118.npz",
+  "capture_sha256": "761e5bc8c00375fbb18b20951f1d5439260e9c02c61341443c9ab4bf593cc95d",
+  "channels": [
+    6,
+    321,
+    997
+  ],
+  "config": {
+    "expert_width": 576,
+    "experts": 384,
+    "extent": 1024,
+    "head_dim": 128,
+    "kv_heads": 2,
+    "query_heads": 12,
+    "rel_dim": 16,
+    "top_k": 8,
+    "width": 1152,
+    "window": 1024
+  },
+  "crossed_cpu_finish": {
+    "residual_compiled__heads_compiled": {
+      "channels": [
+        0.009979248046875,
+        -0.0264434814453125,
+        -0.01309967041015625
+      ],
+      "observed_vs_cpu_finish_on_same_inputs": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 2,
+        "worst_violation": {
+          "actual": 0.009979248046875,
+          "expected": 0.0135650634765625,
+          "index": [
+            0,
+            6
+          ]
+        }
+      }
+    },
+    "residual_compiled__heads_cpu": {
+      "channels": [
+        0.01200103759765625,
+        -0.0262603759765625,
+        -0.01366424560546875
+      ],
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 2,
+        "worst_violation": {
+          "actual": -0.03509521484375,
+          "expected": -0.032135009765625,
+          "index": [
+            0,
+            854
+          ]
+        }
+      }
+    },
+    "residual_compiled__heads_staged": {
+      "channels": [
+        0.0107879638671875,
+        -0.0269927978515625,
+        -0.01297760009765625
+      ],
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 3,
+        "worst_violation": {
+          "actual": 0.056915283203125,
+          "expected": 0.053680419921875,
+          "index": [
+            0,
+            198
+          ]
+        }
+      }
+    },
+    "residual_cpu__heads_compiled": {
+      "channels": [
+        0.01203155517578125,
+        -0.028594970703125,
+        -0.01409149169921875
+      ],
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_cpu__heads_cpu": {
+      "channels": [
+        0.0135650634765625,
+        -0.028228759765625,
+        -0.0135650634765625
+      ],
+      "observed_vs_cpu_finish_on_same_inputs": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_cpu__heads_staged": {
+      "channels": [
+        0.01203155517578125,
+        -0.0291290283203125,
+        -0.01346588134765625
+      ],
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_staged__heads_compiled": {
+      "channels": [
+        0.0128936767578125,
+        -0.0289459228515625,
+        -0.01226806640625
+      ],
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00439453125,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_staged__heads_cpu": {
+      "channels": [
+        0.0114593505859375,
+        -0.028839111328125,
+        -0.0126190185546875
+      ],
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 1,
+        "worst_violation": {
+          "actual": 0.0109710693359375,
+          "expected": 0.008880615234375,
+          "index": [
+            0,
+            1104
+          ]
+        }
+      }
+    },
+    "residual_staged__heads_staged": {
+      "channels": [
+        0.01186370849609375,
+        -0.0288543701171875,
+        -0.0113983154296875
+      ],
+      "observed_vs_cpu_finish_on_same_inputs": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "routes": [
+        [
+          295,
+          105,
+          122,
+          274,
+          365,
+          376,
+          51,
+          69
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.004638671875,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 1,
+        "worst_violation": {
+          "actual": -0.0113983154296875,
+          "expected": -0.0135650634765625,
+          "index": [
+            0,
+            997
+          ]
+        }
+      }
+    }
+  },
+  "device": "Apple M4 Pro",
+  "diagnostic_sha256": {
+    "stack_crossover.py": "eecfa5f012c78b89e9bf0b0edcddc5bb2da96d34aa2cb66b56647781a3b2a0ac",
+    "stack_stages.py": "ea2e863aef7d9a3e5b9c506f192a6e0c853cfc01111fe80f24c5b5a1c12596ad"
+  },
+  "expert_precision": {
+    "compiled": {
+      "fp64_down_vs_observed_at_channels": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 24,
+        "violations": 0
+      },
+      "fp64_gate_up_vs_observed": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0009765625,
+        "rtol": 0.01,
+        "size": 9216,
+        "violations": 0
+      },
+      "replayed_expert_output_exact": true,
+      "replayed_expert_output_vs_actual": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "replayed_routes_match": true,
+      "signed_expert_contributions": [
+        [
+          0.5397715694271028,
+          0.46911149157676846,
+          1.0560748097486794
+        ],
+        [
+          -0.5183234810829163,
+          -0.43982737697660923,
+          -0.5606864579021931
+        ],
+        [
+          0.7395288795232773,
+          -0.4685639329254627,
+          0.3973989514634013
+        ],
+        [
+          -0.7387569411657751,
+          1.0657151844352484,
+          0.2340554647380486
+        ],
+        [
+          -0.6645645861863159,
+          0.0064581394419747085,
+          0.7381926050875336
+        ],
+        [
+          0.5601096489408519,
+          -0.12693393992230995,
+          -0.5746579515107442
+        ],
+        [
+          -0.0167248841980836,
+          -0.6873737183632329,
+          -1.4730774645577185
+        ],
+        [
+          0.10885933072131593,
+          0.15492908062878996,
+          0.16972432668262627
+        ]
+      ],
+      "signed_sum": [
+        0.009899535979457141,
+        -0.026485072104833307,
+        -0.012975716250366531
+      ],
+      "sum_abs_contributions": [
+        3.8866393212456387,
+        3.4189128642703963,
+        5.203868031690945
+      ]
+    },
+    "cpu": {
+      "fp64_down_vs_observed_at_channels": {
+        "atol": 0.002,
+        "max_abs_finite": 3.814697265625e-06,
+        "rtol": 0.01,
+        "size": 24,
+        "violations": 0
+      },
+      "fp64_gate_up_vs_observed": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0009765625,
+        "rtol": 0.01,
+        "size": 9216,
+        "violations": 0
+      },
+      "replayed_expert_output_exact": true,
+      "replayed_expert_output_vs_actual": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "replayed_routes_match": true,
+      "signed_expert_contributions": [
+        [
+          0.5402911200653762,
+          0.4688645319547504,
+          1.0560931242071092
+        ],
+        [
+          -0.5178354348172434,
+          -0.4403345588652883,
+          -0.5606976556009613
+        ],
+        [
+          0.7400435257004574,
+          -0.4690692274598405,
+          0.39741266664350405
+        ],
+        [
+          -0.738221475854516,
+          1.0656584207899868,
+          0.2341670272871852
+        ],
+        [
+          -0.6645499012665823,
+          0.006151718117052951,
+          0.7376981997513212
+        ],
+        [
+          0.560589074739255,
+          -0.12681145592068788,
+          -0.5746522954723332
+        ],
+        [
+          -0.01609566606930457,
+          -0.6873727357015014,
+          -1.4730753586627543
+        ],
+        [
+          0.10934193859429797,
+          0.15469057539303321,
+          0.16948601922922535
+        ]
+      ],
+      "signed_sum": [
+        0.013563181091740262,
+        -0.028222731692494563,
+        -0.01356827261770377
+      ],
+      "sum_abs_contributions": [
+        3.886968137107033,
+        3.4189532242021414,
+        5.203282346854394
+      ]
+    },
+    "staged": {
+      "fp64_down_vs_observed_at_channels": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 24,
+        "violations": 0
+      },
+      "fp64_gate_up_vs_observed": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00048828125,
+        "rtol": 0.01,
+        "size": 9216,
+        "violations": 0
+      },
+      "replayed_expert_output_exact": true,
+      "replayed_expert_output_vs_actual": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "replayed_routes_match": true,
+      "signed_expert_contributions": [
+        [
+          0.5402914282749407,
+          0.4691198945220094,
+          1.0560937266563997
+        ],
+        [
+          -0.5178232787875459,
+          -0.44032422214513645,
+          -0.5601861071772873
+        ],
+        [
+          0.7395344241522253,
+          -0.46905655605951324,
+          0.3976464860024862
+        ],
+        [
+          -0.7387432471150532,
+          1.065695429686457,
+          0.23429919304908253
+        ],
+        [
+          -0.66454092040658,
+          0.0060619936703005806,
+          0.7386444043368101
+        ],
+        [
+          0.5601120356004685,
+          -0.12681324442382902,
+          -0.5746604001615196
+        ],
+        [
+          -0.016007994905521628,
+          -0.6878462746972218,
+          -1.4730867121834308
+        ],
+        [
+          0.10904193052192568,
+          0.1543307190950145,
+          0.16984799326746725
+        ]
+      ],
+      "signed_sum": [
+        0.011864377334859455,
+        -0.028832260351919103,
+        -0.011401416209992021
+      ],
+      "sum_abs_contributions": [
+        3.886095259764261,
+        3.419248334299482,
+        5.2044650228344835
+      ]
+    }
+  },
+  "length": 4096,
+  "methods": [
+    "cpu",
+    "compiled",
+    "staged"
+  ],
+  "observed": {
+    "compiled_vs_staged": {
+      "atol": 0.002,
+      "max_abs_finite": 0.00390625,
+      "rtol": 0.01,
+      "size": 1152,
+      "violations": 1,
+      "worst_violation": {
+        "actual": -0.028839111328125,
+        "expected": -0.0264892578125,
+        "index": [
+          0,
+          321
+        ]
+      }
+    },
+    "cpu_vs_compiled": {
+      "atol": 0.002,
+      "max_abs_finite": 0.00390625,
+      "rtol": 0.01,
+      "size": 1152,
+      "violations": 1,
+      "worst_violation": {
+        "actual": 0.0099029541015625,
+        "expected": 0.0135650634765625,
+        "index": [
+          0,
+          6
+        ]
+      }
+    },
+    "cpu_vs_staged": {
+      "atol": 0.002,
+      "max_abs_finite": 0.004638671875,
+      "rtol": 0.01,
+      "size": 1152,
+      "violations": 1,
+      "worst_violation": {
+        "actual": -0.0113983154296875,
+        "expected": -0.0135650634765625,
+        "index": [
+          0,
+          997
+        ]
+      }
+    }
+  },
+  "observed_channel_values": {
+    "compiled": [
+      0.0099029541015625,
+      -0.0264892578125,
+      -0.01297760009765625
+    ],
+    "cpu": [
+      0.0135650634765625,
+      -0.028228759765625,
+      -0.0135650634765625
+    ],
+    "staged": [
+      0.01186370849609375,
+      -0.028839111328125,
+      -0.0113983154296875
+    ]
+  },
+  "seed": 20261118,
+  "sources_sha256": "f807d8a4329016e1d365e31fefd3a44796f7442ccb80d4b1f50d227acc706237",
+  "wrapper_replay_exact": true
+}

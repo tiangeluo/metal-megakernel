@@ -1,0 +1,6 @@
+# Certificates hash the exact bytes emitted by Python's CSV writer.
+results/**/*.csv -text whitespace=cr-at-eol
+# Matplotlib preserves spaces between SVG path segments across line breaks.
+analysis/attention-*.svg -whitespace
+analysis/decoder-performance.svg -whitespace
+results/report-attention/latency.svg -whitespace

@@ -1,0 +1,29 @@
+{
+  "crossovers": {
+    "crossover-stack-b1-l4096-seed20261118": "complete",
+    "crossover-stack-b1-l4096-seed20261119": "complete",
+    "crossover-stack-b1-l64-seed20261118": "complete",
+    "crossover-stack-b1-l64-seed20261119": "complete"
+  },
+  "machine": {
+    "arch": "arm64",
+    "device": "Apple M4 Pro",
+    "macos": "26.6.2",
+    "mlx": "0.32.4",
+    "numpy": "2.3.5",
+    "python": "3.13.9",
+    "sources_sha256": "f807d8a4329016e1d365e31fefd3a44796f7442ccb80d4b1f50d227acc706237"
+  },
+  "parent": "m4pro-02-a",
+  "parent_machine": {
+    "arch": "arm64",
+    "device": "Apple M4 Pro",
+    "macos": "26.6.2",
+    "mlx": "0.32.4",
+    "numpy": "2.3.5",
+    "python": "3.13.9",
+    "sources_sha256": "f807d8a4329016e1d365e31fefd3a44796f7442ccb80d4b1f50d227acc706237"
+  },
+  "status": "complete",
+  "trace_status": "unavailable or incomplete"
+}

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 824" width="490" height="824"
+     role="img" aria-labelledby="title description" style="max-width:100%;height:auto">
+  <title id="title">A token through the two-layer Inkling-inspired decoder</title>
+  <desc id="description">The local layer updates the partial block passed to the global layer. A blue outline in the global layer shows the isolated benchmark boundary, from post-projection features to gated head outputs and updated state. The enclosing two-layer benchmark includes the depth reads, projections, and both routed expert branches.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" markerWidth="6" markerHeight="6" refX="7" refY="4" orient="auto">
+      <path d="M1 1 L7 4 L1 7" fill="none" stroke="#415260" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      .box{fill:white;stroke:#88929a;stroke-width:1.4}
+      .stroke{fill:none;stroke:#415260;stroke-width:1.6;marker-end:url(#arrow)}
+      text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;fill:#18232b}
+      .stage{font-size:23px;font-weight:650}.label{font-size:18px}
+      .hint{font-size:16px;fill:#44525c}
+      .boundary{fill:#f6f9fe;stroke:#315d96;stroke-width:2.1}
+      .accent{font-size:17px;font-weight:650;fill:#244d85}
+      .line{stroke:#d0d5da;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="490" height="824" fill="white"/>
+  <g text-anchor="middle">
+    <text x="245" y="25" class="stage">Incoming depth state</text>
+    <text x="245" y="50" class="hint">Embedding, completed block and partial sum</text>
+  </g>
+  <path class="stroke" d="M245 61 V81"/>
+
+  <rect class="box" x="10" y="86" width="470" height="192" rx="7"/>
+  <text class="stage" x="26" y="118">Layer 10 · Local</text>
+  <line class="line" x1="26" x2="464" y1="131" y2="131"/>
+  <text class="label" x="26" y="157">Shared depth read and input projections</text>
+  <text class="label" x="26" y="184">Static K/V Conv4, then windowed attention</text>
+  <text class="hint" x="26" y="206">The 1,024-position window includes the new token.</text>
+  <text class="label" x="26" y="237">Gate, output projection, Conv4, residual add</text>
+  <text class="label" x="26" y="262">Depth read, top-8 MoE, Conv4, residual add</text>
+  <path class="stroke" d="M245 278 V322"/>
+  <text class="hint" x="260" y="304">Updated partial sum</text>
+
+  <rect class="box" x="10" y="328" width="470" height="408" rx="7"/>
+  <text class="stage" x="26" y="360">Layer 11 · Global</text>
+  <line class="line" x1="26" x2="464" y1="373" y2="373"/>
+  <text class="label" x="26" y="401">Separate Q, K and V depth reads</text>
+  <text class="label" x="26" y="427">Input projections for the current token</text>
+
+  <rect class="boundary" x="22" y="447" width="446" height="203" rx="5"/>
+  <text class="accent" x="37" y="476">Isolated attention benchmark</text>
+  <text class="label" x="37" y="505">Scale and clip Q/R · dynamic K/V Conv4</text>
+  <text class="label" x="37" y="531">Clip K, normalize V and append both to cache</text>
+  <text class="label" x="37" y="557">Scan cached keys and values with GQA</text>
+  <text class="hint" x="37" y="583">Relative bias for distances &lt; 1,024.</text>
+  <text class="hint" x="37" y="605">One zero-value sink per query head.</text>
+  <text class="label" x="37" y="634">Apply the per-channel output gate</text>
+
+  <text class="label" x="26" y="686">Output projection, Conv4, residual add</text>
+  <text class="label" x="26" y="714">Depth read, top-8 MoE, Conv4, residual add</text>
+  <path class="stroke" d="M245 736 V762"/>
+  <g text-anchor="middle">
+    <text x="245" y="792" class="stage">Completed block summary</text>
+    <text x="245" y="816" class="hint">Both layers carry KV and Conv4 state forward.</text>
+  </g>
+</svg>

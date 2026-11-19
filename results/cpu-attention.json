@@ -1,0 +1,25 @@
+{
+  "seed": 20261118,
+  "length": 64,
+  "geometry": [
+    48,
+    8,
+    128
+  ],
+  "device": "CPU",
+  "numpy_version": "2.3.5",
+  "comparisons": {
+    "gated_output": {
+      "max_abs": 0.0009765625,
+      "relative_l2": 3.221670590068278e-05
+    },
+    "cache_k": {
+      "max_abs": 0.00048828125,
+      "relative_l2": 5.920928716432367e-06
+    },
+    "cache_v": {
+      "max_abs": 0.001953125,
+      "relative_l2": 1.005989379086385e-05
+    }
+  }
+}

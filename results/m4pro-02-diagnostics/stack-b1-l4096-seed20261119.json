@@ -1,0 +1,1959 @@
+{
+  "case": "stack-b1-l4096",
+  "comparisons": {
+    "compiled": {
+      "vs_cpu": {
+        "extra_observables": [],
+        "failed_observables": [],
+        "observables": {
+          "layer10_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.000244140625,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00048828125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 3.0517578125e-05,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0001220703125,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_route_ids": {
+            "actual": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "expected": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001708984375,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 6.4849853515625e-05,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_route_ids": {
+            "actual": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "expected": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "summary": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 1152,
+                "violations": 0
+              }
+            }
+          }
+        },
+        "passed": true
+      }
+    },
+    "hybrid": {
+      "vs_compiled": {
+        "extra_observables": [],
+        "failed_observables": [],
+        "observables": {
+          "layer10_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_route_ids": {
+            "actual": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "expected": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_route_ids": {
+            "actual": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "expected": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "summary": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 1152,
+                "violations": 0
+              }
+            }
+          }
+        },
+        "passed": true
+      },
+      "vs_cpu": {
+        "extra_observables": [],
+        "failed_observables": [],
+        "observables": {
+          "layer10_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.000244140625,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00048828125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 3.0517578125e-05,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0001220703125,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_route_ids": {
+            "actual": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "expected": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001708984375,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 6.4849853515625e-05,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_route_ids": {
+            "actual": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "expected": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "summary": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 1152,
+                "violations": 0
+              }
+            }
+          }
+        },
+        "passed": true
+      }
+    },
+    "single": {
+      "vs_compiled": {
+        "extra_observables": [],
+        "failed_observables": [],
+        "observables": {
+          "layer10_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0001220703125,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00341796875,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_route_ids": {
+            "actual": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "expected": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0010986328125,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0009765625,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 6.103515625e-05,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_route_ids": {
+            "actual": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "expected": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "summary": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 1152,
+                "violations": 0
+              }
+            }
+          }
+        },
+        "passed": true
+      },
+      "vs_cpu": {
+        "extra_observables": [],
+        "failed_observables": [],
+        "observables": {
+          "layer10_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.000244140625,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00048828125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 3.0517578125e-05,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 6.103515625e-05,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_route_ids": {
+            "actual": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "expected": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001708984375,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 6.103515625e-05,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_route_ids": {
+            "actual": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "expected": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "summary": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 1152,
+                "violations": 0
+              }
+            }
+          }
+        },
+        "passed": true
+      }
+    },
+    "staged": {
+      "vs_compiled": {
+        "extra_observables": [],
+        "failed_observables": [],
+        "observables": {
+          "layer10_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0001220703125,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00341796875,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_route_ids": {
+            "actual": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "expected": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0010986328125,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0009765625,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 6.103515625e-05,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_route_ids": {
+            "actual": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "expected": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "summary": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 1152,
+                "violations": 0
+              }
+            }
+          }
+        },
+        "passed": true
+      },
+      "vs_cpu": {
+        "extra_observables": [],
+        "failed_observables": [],
+        "observables": {
+          "layer10_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.000244140625,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 261888,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.0,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00048828125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 3.0517578125e-05,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 6.103515625e-05,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer10_route_ids": {
+            "actual": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "expected": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_k": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001708984375,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_cache_v": {
+            "regions": {
+              "after slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 0,
+                "violations": 0
+              },
+              "before slot": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 1048320,
+                "violations": 0
+              },
+              "written slot": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.002,
+                "size": 256,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_k": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_hist_v": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.001953125,
+                "rtol": 0.01,
+                "size": 768,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_attn": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 6.103515625e-05,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_post_moe": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 3456,
+                "violations": 0
+              }
+            }
+          },
+          "layer11_route_ids": {
+            "actual": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "expected": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ],
+            "regions": {
+              "all": {
+                "atol": 0.0,
+                "max_abs_finite": 0.0,
+                "rtol": 0.0,
+                "size": 8,
+                "violations": 0
+              }
+            }
+          },
+          "summary": {
+            "regions": {
+              "all": {
+                "atol": 0.002,
+                "max_abs_finite": 0.00390625,
+                "rtol": 0.01,
+                "size": 1152,
+                "violations": 0
+              }
+            }
+          }
+        },
+        "passed": true
+      }
+    }
+  },
+  "machine": {
+    "arch": "arm64",
+    "device": "Apple M4 Pro",
+    "macos": "26.6.2",
+    "mlx": "0.32.4",
+    "numpy": "2.3.5",
+    "python": "3.13.9",
+    "sources_sha256": "f807d8a4329016e1d365e31fefd3a44796f7442ccb80d4b1f50d227acc706237"
+  },
+  "method_errors": {},
+  "passed": true,
+  "recorded_at": "2026-11-19T02:00:25.676818+00:00",
+  "seed": 20261119,
+  "status": "complete"
+}

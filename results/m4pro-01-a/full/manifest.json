@@ -1,0 +1,76 @@
+{
+  "environment": {
+    "arch": "arm64",
+    "gpu_probe": {
+      "apple9": true,
+      "device": "Apple M4 Pro",
+      "execution_width": 32,
+      "max_threads_per_group": 1024,
+      "passed": true,
+      "thermal_state": 0,
+      "threadgroup_bytes_used": 22528,
+      "threadgroup_memory_limit": 32768,
+      "verified_outputs": 128
+    },
+    "hardware": {
+      "Chip": [
+        "Apple M4 Pro"
+      ],
+      "Chipset Model": [
+        "Apple M4 Pro"
+      ],
+      "Memory": [
+        "48 GB"
+      ],
+      "Model Identifier": [
+        "Mac16,7"
+      ],
+      "Model Name": [
+        "MacBook Pro"
+      ],
+      "Total Number of Cores": [
+        "14 (10 Performance and 4 Efficiency)",
+        "20"
+      ]
+    },
+    "macos": "26.6.2",
+    "offline_metal_compiler": false,
+    "packages": {
+      "matplotlib": "3.10.6",
+      "mlx": "0.32.4",
+      "mlx-metal": "0.32.4",
+      "numpy": "2.3.5",
+      "pytest": "8.4.2"
+    },
+    "platform": "Darwin",
+    "power": "Now drawing from 'AC Power'",
+    "python": "3.13.9",
+    "recorded_utc": "2026-11-19T01:45:37.008101+00:00",
+    "xcode": "Xcode 26.6\nBuild version 17F113"
+  },
+  "error": "AssertionError: \nNot equal to tolerance rtol=0.01, atol=0.002\nlayer11_post_moe\nMismatched elements: 4 / 3456 (0.116%)\nMax absolute difference among violations: 0.00372314\nMax relative difference among violations: 1.4464172\n ACTUAL: array([[[ 0.445312, -0.106567, -0.874023, ..., -0.537598, -0.90625 ,\n          2.994141],\n        [-0.089355,  0.565918,  0.080261, ...,  0.916016,  0.830078,...\n DESIRED: array([[[ 0.444824, -0.105408, -0.874512, ..., -0.539062, -0.90625 ,\n          2.996094],\n        [-0.089355,  0.565918,  0.080261, ...,  0.916016,  0.830078,...",
+  "resumes": [
+    "2026-11-19T01:45:39.444162+00:00"
+  ],
+  "spec": {
+    "fixtures": 2,
+    "machine": {
+      "arch": "arm64",
+      "device": "Apple M4 Pro",
+      "macos": "26.6.2",
+      "mlx": "0.32.4",
+      "numpy": "2.3.5",
+      "python": "3.13.9",
+      "sources_sha256": "b5e6b5abb6336212a56c716874cc93d2e4441d3fbd86ed9fccf4b5466c8b9247"
+    },
+    "schema": 1,
+    "seed": 20261118,
+    "session": "m4pro-01-a",
+    "suite": "full",
+    "trials": 100,
+    "warmups": 4
+  },
+  "started": "2026-11-19T01:45:39.444153+00:00",
+  "status": "incomplete",
+  "updated": "2026-11-19T01:46:13.413025+00:00"
+}

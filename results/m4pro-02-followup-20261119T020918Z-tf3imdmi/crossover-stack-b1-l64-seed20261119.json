@@ -1,0 +1,410 @@
+{
+  "batch": 1,
+  "capture": "crossover-stack-b1-l64-seed20261119.npz",
+  "capture_sha256": "feb8528c19b24c5ee15b98c8003479c86ce25ca321a0ee2ba6e2baa5ea40cd63",
+  "channels": [],
+  "config": {
+    "expert_width": 576,
+    "experts": 384,
+    "extent": 1024,
+    "head_dim": 128,
+    "kv_heads": 2,
+    "query_heads": 12,
+    "rel_dim": 16,
+    "top_k": 8,
+    "width": 1152,
+    "window": 1024
+  },
+  "crossed_cpu_finish": {
+    "residual_compiled__heads_compiled": {
+      "channels": [],
+      "observed_vs_cpu_finish_on_same_inputs": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_compiled__heads_cpu": {
+      "channels": [],
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 1,
+        "worst_violation": {
+          "actual": -0.00508880615234375,
+          "expected": -0.007488250732421875,
+          "index": [
+            0,
+            1148
+          ]
+        }
+      }
+    },
+    "residual_compiled__heads_staged": {
+      "channels": [],
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_cpu__heads_compiled": {
+      "channels": [],
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_cpu__heads_cpu": {
+      "channels": [],
+      "observed_vs_cpu_finish_on_same_inputs": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_cpu__heads_staged": {
+      "channels": [],
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_staged__heads_compiled": {
+      "channels": [],
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    },
+    "residual_staged__heads_cpu": {
+      "channels": [],
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 1,
+        "worst_violation": {
+          "actual": -0.00508880615234375,
+          "expected": -0.007488250732421875,
+          "index": [
+            0,
+            1148
+          ]
+        }
+      }
+    },
+    "residual_staged__heads_staged": {
+      "channels": [],
+      "observed_vs_cpu_finish_on_same_inputs": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "routes": [
+        [
+          195,
+          216,
+          174,
+          173,
+          6,
+          239,
+          293,
+          82
+        ]
+      ],
+      "vs_cpu": {
+        "atol": 0.002,
+        "max_abs_finite": 0.00390625,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      }
+    }
+  },
+  "device": "Apple M4 Pro",
+  "diagnostic_sha256": {
+    "stack_crossover.py": "eecfa5f012c78b89e9bf0b0edcddc5bb2da96d34aa2cb66b56647781a3b2a0ac",
+    "stack_stages.py": "ea2e863aef7d9a3e5b9c506f192a6e0c853cfc01111fe80f24c5b5a1c12596ad"
+  },
+  "expert_precision": {
+    "compiled": {
+      "fp64_down_vs_observed_at_channels": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 0,
+        "violations": 0
+      },
+      "fp64_gate_up_vs_observed": {
+        "atol": 0.002,
+        "max_abs_finite": 0.000244140625,
+        "rtol": 0.01,
+        "size": 9216,
+        "violations": 0
+      },
+      "replayed_expert_output_exact": true,
+      "replayed_expert_output_vs_actual": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "replayed_routes_match": true,
+      "signed_expert_contributions": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "signed_sum": [],
+      "sum_abs_contributions": []
+    },
+    "cpu": {
+      "fp64_down_vs_observed_at_channels": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 0,
+        "violations": 0
+      },
+      "fp64_gate_up_vs_observed": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0009765625,
+        "rtol": 0.01,
+        "size": 9216,
+        "violations": 0
+      },
+      "replayed_expert_output_exact": true,
+      "replayed_expert_output_vs_actual": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "replayed_routes_match": true,
+      "signed_expert_contributions": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "signed_sum": [],
+      "sum_abs_contributions": []
+    },
+    "staged": {
+      "fp64_down_vs_observed_at_channels": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 0,
+        "violations": 0
+      },
+      "fp64_gate_up_vs_observed": {
+        "atol": 0.002,
+        "max_abs_finite": 0.000244140625,
+        "rtol": 0.01,
+        "size": 9216,
+        "violations": 0
+      },
+      "replayed_expert_output_exact": true,
+      "replayed_expert_output_vs_actual": {
+        "atol": 0.002,
+        "max_abs_finite": 0.0,
+        "rtol": 0.01,
+        "size": 1152,
+        "violations": 0
+      },
+      "replayed_routes_match": true,
+      "signed_expert_contributions": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "signed_sum": [],
+      "sum_abs_contributions": []
+    }
+  },
+  "length": 64,
+  "methods": [
+    "cpu",
+    "compiled",
+    "staged"
+  ],
+  "observed": {
+    "compiled_vs_staged": {
+      "atol": 0.002,
+      "max_abs_finite": 0.0,
+      "rtol": 0.01,
+      "size": 1152,
+      "violations": 0
+    },
+    "cpu_vs_compiled": {
+      "atol": 0.002,
+      "max_abs_finite": 0.00390625,
+      "rtol": 0.01,
+      "size": 1152,
+      "violations": 0
+    },
+    "cpu_vs_staged": {
+      "atol": 0.002,
+      "max_abs_finite": 0.00390625,
+      "rtol": 0.01,
+      "size": 1152,
+      "violations": 0
+    }
+  },
+  "observed_channel_values": {
+    "compiled": [],
+    "cpu": [],
+    "staged": []
+  },
+  "seed": 20261119,
+  "sources_sha256": "f807d8a4329016e1d365e31fefd3a44796f7442ccb80d4b1f50d227acc706237",
+  "wrapper_replay_exact": true
+}

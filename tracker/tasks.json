@@ -1,0 +1,134 @@
+[
+  {
+    "title": "Planning",
+    "tasks": [
+      [
+        "Review the source architecture",
+        "Checked the published layer order, attention geometry, four convolutions, six-layer depth blocks, and 384-expert routing against the sources linked under Architecture.",
+        "Complete"
+      ],
+      [
+        "Choose the fusion boundaries and controls",
+        "Recorded common operator inputs and observable outputs, four schedules, and a split-context attribution control.",
+        "Complete"
+      ],
+      [
+        "Specify the outputs for the blog",
+        "Defined the structure diagram, headline table, six-point latency figure, and a separate source folder for the eventual GitHub repository.",
+        "Complete"
+      ]
+    ]
+  },
+  {
+    "title": "Environment and reference",
+    "tasks": [
+      [
+        "Confirm GPU execution on this Mac",
+        "Run a native Metal probe in a GPU-visible session and verify its output, device limits and threadgroup memory. The earlier restricted-session probe enumerated zero devices. Record MLX, compiler, OS, GPU, power and thermal state.",
+        "Blocked",
+        "The Objective-C host probe compiled on the M4 Pro. This workspace enumerated zero Metal devices. The same probe can run in the normal macOS login session with ./mac-run connect."
+      ],
+      [
+        "Set up the independent code folder",
+        "Place experiment code in metal-megakernel/ separately from the homepage. Include pinned dependencies, a config, environment capture and repeatable commands. Keep planning status separate from benchmark results.",
+        "Complete",
+        "Created a standalone repository folder, pinned Mac dependencies, runtime environment capture and host commands."
+      ],
+      [
+        "Pin the numerical contract and fixtures",
+        "Pin upstream config/code revisions. Freeze seeds, layouts, all cast points, cache chronology, router tie policy, and FP32-reference tolerances before performance tuning. Generate varied routes and near-boundary inputs.",
+        "Complete",
+        "Pinned the full upstream revisions, transposed relative table layout, cast points, seeds, cache state and tolerances in reference/README.md."
+      ],
+      [
+        "Implement the attention and decoder references",
+        "Implement cached one-token decode and an independent full-sequence reference. Include depth reads, all four Conv4 histories, dynamic global K/V taps, query-dependent relative features, clipping, V norm, gated attention and routed MoE. Seed omitted upstream states per token.",
+        "Complete",
+        "Implemented independent dense and cached attention and the connected local/global CPU decoder. A 64-token published-geometry trajectory gave relative L2 output error 0.00003222."
+      ],
+      [
+        "Verify cache, routing and two-layer correctness",
+        "Compare sequential decode with prefill. Check first three Conv4 positions, lengths 1,023–1,025, local eviction versus global retention, sink/clip extremes, normalized depth mixtures, output state and top-8 route IDs. Quantify numerical error and diagnose routing ties.",
+        "Complete",
+        "CPU checks cover repeated ring wrapping, lengths 1,023–1,025, extreme gates and sinks, the three startup taps, depth mixtures, exact routes and a connected rollout against dense prefill. GPU parity is tracked per schedule."
+      ]
+    ]
+  },
+  {
+    "title": "Attention implementations",
+    "tasks": [
+      [
+        "Build the compiled MLX baseline",
+        "Use optimized GQA and an additive relative bias. Test batch-to-head sink equivalence against a dense reference, include mask construction and cache updates, and confirm the fast path or label the fallback.",
+        "In progress",
+        "Compiled MLX and GPU parity tests are implemented. Host checks passed for batched sink/head folding. Running the optimized path and reviewing its dispatches awaits GPU access."
+      ],
+      [
+        "Build staged Metal",
+        "Implement preparation, KV scan and gate with a common native math core and preallocated buffers. Encode into one ordered command buffer and verify intermediate and final state.",
+        "In progress",
+        "The Objective-C++ host bridge compiled and loaded. Staged Metal encodes preparation, scan and gate in one command buffer. GPU shader compilation and output parity remain open."
+      ],
+      [
+        "Build the single-dispatch Metal kernel",
+        "Give each sequence/KV-head pair exclusive write ownership. Stage only live tiles, use online softmax and record compiled resource limits. Require parity with the staged path.",
+        "In progress",
+        "The shader forwards the rounded current K/V pair through threadgroup memory and streams older K/V tiles. GPU execution and parity remain open."
+      ],
+      [
+        "Build the hybrid schedule",
+        "Combine native preparation with tuned MLX attention and gating in the same calling context. Verify ownership and dependencies and charge any interop copies, layout changes and synchronization.",
+        "In progress",
+        "Implemented the custom Metal preparation shader, MLX cache append, tuned SDPA and output gate. Host numerical checks passed. GPU compilation, trace and parity remain open."
+      ],
+      [
+        "Check the parallelism explanation",
+        "Implement a native split-context scan and numerically stable merge. Count the sink and current token once. Test 64 and 4,096 positions and capture traces for the matched and split variants.",
+        "In progress",
+        "Implemented the split-context scan and stable merge with one sink contribution. GPU timings and dispatch traces remain open."
+      ]
+    ]
+  },
+  {
+    "title": "Timing and analysis",
+    "tasks": [
+      [
+        "Run the two-point pilot",
+        "Compare all four schedules at 48:8, batch one and lengths 64 and 4,096. The original plan called for a trace before expanding. The first sweep was collected before tracing. Dispatch verification remains open under the parallelism task.",
+        "Blocked",
+        "The pilot preflight found zero accessible GPU devices here and produced no measurements. The ordinary Mac session can collect real trial timings with ./mac-run pilot."
+      ],
+      [
+        "Run the full attention sweep",
+        "Collect the six predeclared batch-one lengths, plus batch eight at 4,096. Warm and interleave all schedules. Keep raw samples, synchronized wall time, native GPU times where available, dispatch counts and variability."
+      ],
+      [
+        "Time the connected two-layer stack",
+        "Use the same depth, MoE and projection implementations around each attention backend. Check seed-to-seed route changes, verify no copying of the expert bank, record peak allocation, and time a new token at 64 and 4,096 positions.",
+        "In progress",
+        "The full two-layer stack ran on CPU at lengths 64 and 4,096 with all 384 experts per layer and 15 finite observables. Four GPU adapters await comparison."
+      ],
+      [
+        "Repeat and audit the measurements",
+        "Repeat in a separate session, check thermal/order effects and paired confidence intervals, flag unstable cells, and distinguish trace-supported explanations from hypotheses."
+      ]
+    ]
+  },
+  {
+    "title": "Blog and release",
+    "tasks": [
+      [
+        "Render the figure and results table",
+        "Generate the four-line global latency figure and five-row table from raw samples. Include losing cases, speedups, intervals, units, environment and trace-backed dispatch counts.",
+        "In progress",
+        "The plotting and table pipeline passes tests with temporary test fixtures. Only verified GPU trials enter the progress page or research outputs."
+      ],
+      [
+        "Write the post and prepare the code link",
+        "Connect FA and LMSYS to the measured Metal boundary. Publish the architecture illustration, numerical contract and limits. Prepare the standalone GitHub-ready repository, README and a one-command figure/table rebuild. Confirm release and homepage link at publication time.",
+        "In progress",
+        "Prepared docs/article.md, docs/architecture.svg, the standalone source and the reproducibility instructions. Performance interpretation and public release await measurements."
+      ]
+    ]
+  }
+]

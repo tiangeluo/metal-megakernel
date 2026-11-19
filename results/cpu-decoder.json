@@ -1,0 +1,49 @@
+{
+  "method": "cpu",
+  "geometry": {
+    "width": 1152,
+    "expert_width": 576,
+    "query_heads": 12,
+    "kv_heads": 2,
+    "head_dim": 128,
+    "rel_dim": 16,
+    "window": 1024,
+    "extent": 1024,
+    "experts": 384,
+    "top_k": 8
+  },
+  "length": 64,
+  "expert_weight_bytes": 3057647616,
+  "output_arrays": 15,
+  "summary_shape": [
+    1,
+    1152
+  ],
+  "summary_l2": 50.98177719116211,
+  "routes": [
+    [
+      [
+        286,
+        118,
+        11,
+        4,
+        104,
+        348,
+        15,
+        337
+      ]
+    ],
+    [
+      [
+        326,
+        324,
+        159,
+        185,
+        51,
+        121,
+        321,
+        130
+      ]
+    ]
+  ]
+}

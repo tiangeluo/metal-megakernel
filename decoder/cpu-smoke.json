@@ -1,0 +1,85 @@
+{
+  "device": "CPU, NumPy",
+  "numpy": "2.0.2",
+  "geometry": {
+    "width": 1152,
+    "expert_width": 576,
+    "query_heads": 12,
+    "kv_heads": 2,
+    "head_dim": 128,
+    "rel_dim": 16,
+    "window": 1024,
+    "extent": 1024,
+    "experts": 384,
+    "top_k": 8
+  },
+  "expert_weights_bytes": 3057647616,
+  "cases": [
+    {
+      "batch": 1,
+      "length": 64,
+      "seed": 0,
+      "all_15_observables_finite": true,
+      "summary_shape": [
+        1,
+        1152
+      ],
+      "summary_l2": 50.98177719116211,
+      "routes": [
+        [
+          286,
+          118,
+          11,
+          4,
+          104,
+          348,
+          15,
+          337
+        ],
+        [
+          326,
+          324,
+          159,
+          185,
+          51,
+          121,
+          321,
+          130
+        ]
+      ]
+    },
+    {
+      "batch": 1,
+      "length": 4096,
+      "seed": 1,
+      "all_15_observables_finite": true,
+      "summary_shape": [
+        1,
+        1152
+      ],
+      "summary_l2": 49.436588287353516,
+      "routes": [
+        [
+          90,
+          375,
+          165,
+          322,
+          99,
+          287,
+          63,
+          290
+        ],
+        [
+          174,
+          193,
+          377,
+          337,
+          10,
+          322,
+          157,
+          81
+        ]
+      ]
+    }
+  ]
+}

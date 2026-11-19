@@ -1,0 +1,140 @@
+{
+  "case": "attention-b1-l4096",
+  "session": "20261119T022803Z-drlponz3",
+  "capture_manifest_sha256": "80a1e8324c2ac83ba721a1a0b5e2c7c07fc9823aaa2fce854b52324d05c795d6",
+  "environment_sha256": "b006ea293ad73585ba77f63cc5011307fb4b38202306a4c6900e7aa6c3b55eb8",
+  "methods": {
+    "single": {
+      "pid": 65555,
+      "marker_ns": [
+        5875510208,
+        5879439083
+      ],
+      "command_buffers": 1,
+      "compute_encoders": 1,
+      "gpu_compute_intervals": 1,
+      "active_compute_ns": 3393583,
+      "observed_dispatches": null,
+      "shader_interval_rows": 0,
+      "buffer_ids": [
+        40711287004
+      ],
+      "encoder_ids": [
+        40711287005
+      ],
+      "gpu_spans_ns": [
+        [
+          5875956708,
+          5879350291
+        ]
+      ],
+      "toc_sha256": "cbb68817999c23f9e608df8a665c482577412595f60b1d2c0656395e407f8e48",
+      "export_sha256": {
+        "os-signpost": "a66a101518123addda8569281e80a1afdc753ca75e59d2ac0857f9413ffc3be4",
+        "metal-application-command-buffer-submissions": "daa1451b03de22bc554d12f74114ef61b13d3a9cc767fef7853faacbd358c724",
+        "metal-application-encoders-list": "2d268eee34ef0a153373377e20f26be0265229b16a1b5a478124cf8f0f8b8720",
+        "metal-gpu-intervals": "4d36e90e56d080b3249411babaff7771e5e5e8e0c90db65dde32bcc2855d0f70",
+        "metal-shader-profiler-intervals": "eda31dbcfb524f4f44d305694a9ac62a9b064559bb9beda33b1524dd6a9aee87"
+      }
+    },
+    "split": {
+      "pid": 67919,
+      "marker_ns": [
+        4359402750,
+        4361081500
+      ],
+      "command_buffers": 1,
+      "compute_encoders": 1,
+      "gpu_compute_intervals": 1,
+      "active_compute_ns": 1160750,
+      "observed_dispatches": null,
+      "shader_interval_rows": 0,
+      "buffer_ids": [
+        40728069147
+      ],
+      "encoder_ids": [
+        40728069148
+      ],
+      "gpu_spans_ns": [
+        [
+          4359800583,
+          4360961333
+        ]
+      ],
+      "toc_sha256": "fdf9b81d5f10fa71c642795d8789446cf33873132126b4f4942e295973afc967",
+      "export_sha256": {
+        "os-signpost": "a3c3efab6606be06ba71dec9b4ee074da9e803ae0847f8efb02505f0eb5c4074",
+        "metal-application-command-buffer-submissions": "2c821d1895969c16a58c1b1ed9c15099cbdf032fa2ccd016c7afdda8a535197f",
+        "metal-application-encoders-list": "2b4629047e3a3db80cf34c7e5d416bcd20792a2ea4282eb41595f6804955623d",
+        "metal-gpu-intervals": "39dea4ee648e2e995c1dad1377806ed02fcf791387b19ada53a32864f5e03d54",
+        "metal-shader-profiler-intervals": "eda31dbcfb524f4f44d305694a9ac62a9b064559bb9beda33b1524dd6a9aee87"
+      }
+    },
+    "compiled": {
+      "pid": 70493,
+      "marker_ns": [
+        6507274333,
+        6508817875
+      ],
+      "command_buffers": 1,
+      "compute_encoders": 1,
+      "gpu_compute_intervals": 1,
+      "active_compute_ns": 537542,
+      "observed_dispatches": null,
+      "shader_interval_rows": 0,
+      "buffer_ids": [
+        40744850947
+      ],
+      "encoder_ids": [
+        40744850948
+      ],
+      "gpu_spans_ns": [
+        [
+          6508156541,
+          6508694083
+        ]
+      ],
+      "toc_sha256": "f3253719810f42a445e79f910b360dd5bf87bc136f27ff2d302a16e271420245",
+      "export_sha256": {
+        "os-signpost": "8957004a6be6e20c25160433e079b8176af1d0d117504a59ad4dbf388a124aec",
+        "metal-application-command-buffer-submissions": "0afa3baf2c9bca3bd1824be3b6f4c371d0d317e4868f7eda3519ef7db9aba32b",
+        "metal-application-encoders-list": "695bd87e27a5262876499ad7ec51adcc28bd7f52572fab9cd0a3d5752891d1b5",
+        "metal-gpu-intervals": "2b4071f10c64ffb979853cec78bb9e666d5f3ebe8c328acc4c42d53c10798b17",
+        "metal-shader-profiler-intervals": "eda31dbcfb524f4f44d305694a9ac62a9b064559bb9beda33b1524dd6a9aee87"
+      }
+    },
+    "hybrid": {
+      "pid": 72841,
+      "marker_ns": [
+        5226433458,
+        5227439875
+      ],
+      "command_buffers": 1,
+      "compute_encoders": 1,
+      "gpu_compute_intervals": 1,
+      "active_compute_ns": 507958,
+      "observed_dispatches": null,
+      "shader_interval_rows": 0,
+      "buffer_ids": [
+        40761634282
+      ],
+      "encoder_ids": [
+        40761634283
+      ],
+      "gpu_spans_ns": [
+        [
+          5226841125,
+          5227349083
+        ]
+      ],
+      "toc_sha256": "de451fa0dfc1086712fdde2185e619d9cd781773b49d5a029fbd9597691ad3eb",
+      "export_sha256": {
+        "os-signpost": "bb677c113fe6cd7430874f31ca048bdc279c67acba0a0b246a4fb9197ebe26d9",
+        "metal-application-command-buffer-submissions": "57290b802f5974ea71fe7962452cc5a623f347de631a9514929c3c934dba1318",
+        "metal-application-encoders-list": "4711f42edf6f244d5040fa21d09cae7ed6f51cec476c3ae25c725720da60c58a",
+        "metal-gpu-intervals": "cddb3298ad8ca5ae9a9e978eff856020f24c5b7ba2b83f312e42695f6851d9cc",
+        "metal-shader-profiler-intervals": "eda31dbcfb524f4f44d305694a9ac62a9b064559bb9beda33b1524dd6a9aee87"
+      }
+    }
+  }
+}

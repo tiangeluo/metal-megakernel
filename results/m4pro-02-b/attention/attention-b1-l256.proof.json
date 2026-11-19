@@ -1,0 +1,69 @@
+{
+  "case": "attention-b1-l256",
+  "oracle_max_abs": {
+    "0": {
+      "compiled": {
+        "cache_k": 0.0,
+        "cache_v": 3.0517578125e-05,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "hybrid": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "single": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "staged": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      }
+    },
+    "1": {
+      "compiled": {
+        "cache_k": 1.9073486328125e-06,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "hybrid": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 0.0001220703125
+      },
+      "single": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 3.0517578125e-05
+      },
+      "staged": {
+        "cache_k": 0.0,
+        "cache_v": 0.0,
+        "hist_k": 0.0,
+        "hist_v": 0.0,
+        "output": 3.0517578125e-05
+      }
+    }
+  },
+  "rechecked_after_timing": true,
+  "row_count": 400,
+  "schema": 1,
+  "sha256": "8ec085501de0323697dee0c302c98b35552b6ae9f4dfc508b6076287990ba184"
+}

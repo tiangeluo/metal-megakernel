@@ -1,0 +1,168 @@
+{
+  "control": "fp32-moe-depth-and-experts-v1",
+  "contract": "FP32 MoE depth-read output, router input, gate/up and down projection outputs, expert activation and weighted sum. FP16 expert banks; one FP16 cast after mixing. Attention, projections outside the MoE, cache, convolution and residual storage retain the original cast points. The GPU uses a custom selected-expert matvec.",
+  "scope": "Offline layer-11 MoE output on saved original residual and head inputs. All finishes recomputed on CPU. Full connected control and GPU kernel require device validation.",
+  "control_source_sha256": "9dd3c95109b88788529dc90976f6dae4fdb866779d8baca22a789000434edc5d",
+  "fixtures": [
+    {
+      "length": 64,
+      "seed": 20261118,
+      "archive_sha256": "a92594ef18c14f5fd300636920780820b2ee12d3594c750d3b4986d89c2773a1",
+      "pairs": {
+        "cpu_vs_compiled": {
+          "original_cpu_finish": {
+            "violating_channels": 8,
+            "largest_fraction_of_original_limit": 1.418047308921814
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.8586903810501099
+          },
+          "control_route_ids_equal": true
+        },
+        "cpu_vs_staged": {
+          "original_cpu_finish": {
+            "violating_channels": 4,
+            "largest_fraction_of_original_limit": 1.4033421277999878
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.693337082862854
+          },
+          "control_route_ids_equal": true
+        },
+        "compiled_vs_staged": {
+          "original_cpu_finish": {
+            "violating_channels": 3,
+            "largest_fraction_of_original_limit": 1.250775694847107
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.7640586495399475
+          },
+          "control_route_ids_equal": true
+        }
+      }
+    },
+    {
+      "length": 64,
+      "seed": 20261119,
+      "archive_sha256": "feb8528c19b24c5ee15b98c8003479c86ce25ca321a0ee2ba6e2baa5ea40cd63",
+      "pairs": {
+        "cpu_vs_compiled": {
+          "original_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.9523493647575378
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.2813906967639923
+          },
+          "control_route_ids_equal": true
+        },
+        "cpu_vs_staged": {
+          "original_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.9523493647575378
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.2813906967639923
+          },
+          "control_route_ids_equal": true
+        },
+        "compiled_vs_staged": {
+          "original_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.0
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.0
+          },
+          "control_route_ids_equal": true
+        }
+      }
+    },
+    {
+      "length": 4096,
+      "seed": 20261118,
+      "archive_sha256": "761e5bc8c00375fbb18b20951f1d5439260e9c02c61341443c9ab4bf593cc95d",
+      "pairs": {
+        "cpu_vs_compiled": {
+          "original_cpu_finish": {
+            "violating_channels": 2,
+            "largest_fraction_of_original_limit": 1.6790270805358887
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.4828585386276245
+          },
+          "control_route_ids_equal": true
+        },
+        "cpu_vs_staged": {
+          "original_cpu_finish": {
+            "violating_channels": 1,
+            "largest_fraction_of_original_limit": 1.0145610570907593
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.4651752710342407
+          },
+          "control_route_ids_equal": true
+        },
+        "compiled_vs_staged": {
+          "original_cpu_finish": {
+            "violating_channels": 1,
+            "largest_fraction_of_original_limit": 1.0646755695343018
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.5820595622062683
+          },
+          "control_route_ids_equal": true
+        }
+      }
+    },
+    {
+      "length": 4096,
+      "seed": 20261119,
+      "archive_sha256": "35d5ab80da97094ba80b317e3f8c44bab915db2b48043800c85569178a552d41",
+      "pairs": {
+        "cpu_vs_compiled": {
+          "original_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.8996483087539673
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.2760508954524994
+          },
+          "control_route_ids_equal": true
+        },
+        "cpu_vs_staged": {
+          "original_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.6025457382202148
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.26784706115722656
+          },
+          "control_route_ids_equal": true
+        },
+        "compiled_vs_staged": {
+          "original_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.6803019642829895
+          },
+          "control_cpu_finish": {
+            "violating_channels": 0,
+            "largest_fraction_of_original_limit": 0.3538212478160858
+          },
+          "control_route_ids_equal": true
+        }
+      }
+    }
+  ]
+}

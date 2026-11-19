@@ -1,0 +1,100 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")"
+export MPLCONFIGDIR="${MPLCONFIGDIR:-$PWD/build/mpl-cache}"
+mkdir -p "$MPLCONFIGDIR"
+probe() {
+    mkdir -p results
+    snapshot=$(mktemp results/probe.XXXXXXXX)
+    if python3 scripts/environment.py --out "$snapshot"; then
+        mv "$snapshot" results/host-probe.json
+    else
+        mv "$snapshot" results/last-failed-probe.json
+        return 2
+    fi
+}
+render() {
+    if [ -x .venv/bin/python ]; then
+        .venv/bin/python tracker/render.py
+    elif python3 -c 'import numpy' >/dev/null 2>&1; then
+        python3 tracker/render.py
+    else
+        echo "The included tracker is available in dist/index.html. The study installs its reporting dependencies."
+    fi
+}
+setup() {
+    if [ ! -x .venv/bin/python ]; then
+      if command -v uv >/dev/null 2>&1; then
+        uv venv --python "${MEGAKERNEL_PYTHON:-3.13.9}" .venv
+      else
+        python3 -c 'import sys; assert (3,11) <= sys.version_info[:2] <= (3,13), "Use Python 3.11 through 3.13 or install uv."'
+        python3 -m venv .venv
+      fi
+    fi
+    if command -v uv >/dev/null 2>&1; then
+      uv pip install --python .venv/bin/python -r requirements-mac.txt
+    else
+      .venv/bin/python -m pip install -r requirements-mac.txt
+    fi
+}
+case "${1:-}" in
+  verify)
+    py=python3
+    if [ -x .venv/bin/python ]; then py=.venv/bin/python; fi
+    shift
+    "$py" -m scripts.verify_release "$@"
+    ;;
+  replicate)
+    shift
+    case "${1:-}" in -h|--help) exec python3 -m scripts.replicate --help ;; esac
+    setup
+    .venv/bin/python -m scripts.replicate "$@"
+    ;;
+  report)
+    py=python3
+    if [ -x .venv/bin/python ]; then py=.venv/bin/python; fi
+    "$py" -m analysis.attention_report --scope attention --sessions m4pro-02-a m4pro-02-b --out results/report-attention
+    "$py" -m diagnostics.precision_study --report-only --out results/precision-control-01
+    "$py" -m analysis.preliminary
+    "$py" -m analysis.verified
+    "$py" -m analysis.decoder_performance
+    "$py" tracker/render.py
+    if command -v pandoc >/dev/null 2>&1; then
+        (cd docs && pandoc article.md --from=gfm --standalone --embed-resources \
+            --css=article.css --metadata pagetitle="Studying Megakernels on a Mac" --wrap=none -o article.html)
+    fi
+    ;;
+  connect)
+    python3 scripts/link_tracker.py
+    trap render EXIT
+    probe
+    ;;
+  probe)
+    trap render EXIT
+    probe
+    ;;
+  followup)
+    trap render EXIT
+    probe
+    if [ ! -x .venv/bin/python ]; then setup; fi
+    .venv/bin/python -m scripts.followup
+    ;;
+  precision)
+    trap render EXIT
+    probe
+    if [ ! -x .venv/bin/python ]; then setup; fi
+    .venv/bin/python -m scripts.precision_round
+    ;;
+  pilot|full|study)
+    trap render EXIT
+    probe
+    setup
+    name=${2:-$(date -u +%Y%m%dT%H%M%SZ)}
+    if [ "$1" = study ]; then
+      .venv/bin/python -m scripts.study "$name"
+    else
+      .venv/bin/python -m scripts.study "$name" --suite "$1"
+    fi
+    ;;
+  *) echo "Usage: ./mac-run connect | probe | pilot [session] | full [session] | study [study-name] | followup | precision | replicate [label] [--traces] | verify | report" >&2; exit 64 ;;
+esac
