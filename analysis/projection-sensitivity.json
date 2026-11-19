@@ -1,0 +1,813 @@
+{
+  "backend": "NumPy CPU",
+  "numpy": "2.3.5",
+  "python": "3.13.9",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "geometry": {
+    "width": 1152,
+    "expert_width": 576,
+    "query_heads": 12,
+    "kv_heads": 2,
+    "head_dim": 128,
+    "rel_dim": 16,
+    "window": 1024,
+    "extent": 1024,
+    "experts": 384,
+    "top_k": 8
+  },
+  "decoder_model_sha256": "1a0ce0fbd6324060122f2d6273f5fd3d13d185eb352da16feb3f0809fe416b61",
+  "reference": "Current decoder.model.project (FP32 einsum, FP16 output)",
+  "cases": [
+    {
+      "seed": 20261118,
+      "length": 64,
+      "batch": 1,
+      "reference_routes": {
+        "layer10_route_ids": [
+          [
+            321,
+            43,
+            231,
+            364,
+            48,
+            9,
+            64,
+            236
+          ]
+        ],
+        "layer11_route_ids": [
+          [
+            122,
+            274,
+            295,
+            262,
+            105,
+            218,
+            51,
+            365
+          ]
+        ]
+      },
+      "variants": {
+        "matmul_fp32": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                321,
+                43,
+                231,
+                364,
+                48,
+                9,
+                64,
+                236
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                122,
+                274,
+                295,
+                262,
+                105,
+                218,
+                51,
+                365
+              ]
+            ]
+          },
+          "failed_observables": [],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.0009765625,
+              "relative_l2": 3.7849778891541064e-05,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0004945117980241776,
+              "outside_original_bound": []
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0003446658083703369,
+              "outside_original_bound": []
+            }
+          }
+        },
+        "partials_fp32": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                321,
+                43,
+                231,
+                364,
+                48,
+                9,
+                64,
+                236
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                122,
+                274,
+                295,
+                262,
+                105,
+                218,
+                51,
+                365
+              ]
+            ]
+          },
+          "failed_observables": [],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.0009765625,
+              "relative_l2": 5.302040517563e-05,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0005399785586632788,
+              "outside_original_bound": []
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.001953125,
+              "relative_l2": 0.0003592030261643231,
+              "outside_original_bound": []
+            }
+          }
+        },
+        "einsum_fp64": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                321,
+                43,
+                231,
+                364,
+                48,
+                9,
+                64,
+                236
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                122,
+                274,
+                295,
+                262,
+                105,
+                218,
+                51,
+                365
+              ]
+            ]
+          },
+          "failed_observables": [
+            "layer11_post_moe"
+          ],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.001953125,
+              "relative_l2": 6.54521572869271e-05,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0006006885669194162,
+              "outside_original_bound": [
+                {
+                  "batch": 0,
+                  "channel": 946,
+                  "reference": -0.01200103759765625,
+                  "alternative": -0.0097503662109375,
+                  "absolute_error": 0.00225067138671875,
+                  "allowed_error": 0.002120010554790497
+                }
+              ]
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.001953125,
+              "relative_l2": 0.0003807930916082114,
+              "outside_original_bound": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "seed": 20261118,
+      "length": 4096,
+      "batch": 1,
+      "reference_routes": {
+        "layer10_route_ids": [
+          [
+            321,
+            231,
+            364,
+            48,
+            43,
+            9,
+            236,
+            302
+          ]
+        ],
+        "layer11_route_ids": [
+          [
+            295,
+            105,
+            122,
+            274,
+            365,
+            376,
+            51,
+            69
+          ]
+        ]
+      },
+      "variants": {
+        "matmul_fp32": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                321,
+                231,
+                364,
+                48,
+                43,
+                9,
+                236,
+                302
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                295,
+                105,
+                122,
+                274,
+                365,
+                376,
+                51,
+                69
+              ]
+            ]
+          },
+          "failed_observables": [
+            "layer11_post_moe"
+          ],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.00040754987276159227,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.000721045711543411,
+              "outside_original_bound": [
+                {
+                  "batch": 0,
+                  "channel": 6,
+                  "reference": 0.0135650634765625,
+                  "alternative": 0.0110626220703125,
+                  "absolute_error": 0.00250244140625,
+                  "allowed_error": 0.002135650720447302
+                },
+                {
+                  "batch": 0,
+                  "channel": 112,
+                  "reference": 0.12432861328125,
+                  "alternative": 0.12066650390625,
+                  "absolute_error": 0.003662109375,
+                  "allowed_error": 0.0032432861626148224
+                }
+              ]
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0005291224806569517,
+              "outside_original_bound": []
+            }
+          }
+        },
+        "partials_fp32": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                321,
+                231,
+                364,
+                48,
+                43,
+                9,
+                236,
+                302
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                295,
+                105,
+                122,
+                274,
+                365,
+                376,
+                51,
+                69
+              ]
+            ]
+          },
+          "failed_observables": [],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.00041791010880842805,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0007106605917215347,
+              "outside_original_bound": []
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.000539046130143106,
+              "outside_original_bound": []
+            }
+          }
+        },
+        "einsum_fp64": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                321,
+                231,
+                364,
+                48,
+                43,
+                9,
+                236,
+                302
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                295,
+                105,
+                122,
+                274,
+                365,
+                376,
+                51,
+                69
+              ]
+            ]
+          },
+          "failed_observables": [],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.00040524511132389307,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.000799689267296344,
+              "outside_original_bound": []
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0005545776220969856,
+              "outside_original_bound": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "seed": 20261119,
+      "length": 64,
+      "batch": 1,
+      "reference_routes": {
+        "layer10_route_ids": [
+          [
+            379,
+            69,
+            118,
+            371,
+            259,
+            339,
+            35,
+            111
+          ]
+        ],
+        "layer11_route_ids": [
+          [
+            195,
+            216,
+            174,
+            173,
+            6,
+            239,
+            293,
+            82
+          ]
+        ]
+      },
+      "variants": {
+        "matmul_fp32": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                379,
+                69,
+                118,
+                371,
+                259,
+                339,
+                35,
+                111
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                195,
+                216,
+                174,
+                173,
+                6,
+                239,
+                293,
+                82
+              ]
+            ]
+          },
+          "failed_observables": [],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.000244140625,
+              "relative_l2": 4.46389140051906e-06,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0003048097132705152,
+              "outside_original_bound": []
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.001953125,
+              "relative_l2": 0.00022609005100093782,
+              "outside_original_bound": []
+            }
+          }
+        },
+        "partials_fp32": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                379,
+                69,
+                118,
+                371,
+                259,
+                339,
+                35,
+                111
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                195,
+                216,
+                174,
+                173,
+                6,
+                239,
+                293,
+                82
+              ]
+            ]
+          },
+          "failed_observables": [
+            "layer11_post_moe"
+          ],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.00034209253499284387,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0006272780592553318,
+              "outside_original_bound": [
+                {
+                  "batch": 0,
+                  "channel": 1148,
+                  "reference": -0.007488250732421875,
+                  "alternative": -0.00524139404296875,
+                  "absolute_error": 0.002246856689453125,
+                  "allowed_error": 0.002074882620945573
+                }
+              ]
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0004435206938069314,
+              "outside_original_bound": []
+            }
+          }
+        },
+        "einsum_fp64": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                379,
+                69,
+                118,
+                371,
+                259,
+                339,
+                35,
+                111
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                195,
+                216,
+                174,
+                173,
+                6,
+                239,
+                293,
+                82
+              ]
+            ]
+          },
+          "failed_observables": [
+            "layer11_post_moe"
+          ],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.00032987823942676187,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.0048828125,
+              "relative_l2": 0.0007325089536607265,
+              "outside_original_bound": [
+                {
+                  "batch": 0,
+                  "channel": 35,
+                  "reference": 0.017364501953125,
+                  "alternative": 0.01497650146484375,
+                  "absolute_error": 0.00238800048828125,
+                  "allowed_error": 0.0021736451890319586
+                },
+                {
+                  "batch": 0,
+                  "channel": 1148,
+                  "reference": -0.007488250732421875,
+                  "alternative": -0.004428863525390625,
+                  "absolute_error": 0.00305938720703125,
+                  "allowed_error": 0.002074882620945573
+                }
+              ]
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0004890752607025206,
+              "outside_original_bound": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "seed": 20261119,
+      "length": 4096,
+      "batch": 1,
+      "reference_routes": {
+        "layer10_route_ids": [
+          [
+            379,
+            69,
+            118,
+            371,
+            35,
+            259,
+            111,
+            254
+          ]
+        ],
+        "layer11_route_ids": [
+          [
+            195,
+            216,
+            174,
+            6,
+            122,
+            293,
+            239,
+            173
+          ]
+        ]
+      },
+      "variants": {
+        "matmul_fp32": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ]
+          },
+          "failed_observables": [],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00048828125,
+              "relative_l2": 1.579258059791755e-05,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0004030610725749284,
+              "outside_original_bound": []
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.00030504801543429494,
+              "outside_original_bound": []
+            }
+          }
+        },
+        "partials_fp32": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ]
+          },
+          "failed_observables": [
+            "layer11_post_moe"
+          ],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0004883673973381519,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0007568584987893701,
+              "outside_original_bound": [
+                {
+                  "batch": 0,
+                  "channel": 398,
+                  "reference": 0.08013916015625,
+                  "alternative": 0.0833740234375,
+                  "absolute_error": 0.00323486328125,
+                  "allowed_error": 0.002801391761749983
+                }
+              ]
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0005580306751653552,
+              "outside_original_bound": []
+            }
+          }
+        },
+        "einsum_fp64": {
+          "routes": {
+            "layer10_route_ids": [
+              [
+                379,
+                69,
+                118,
+                371,
+                35,
+                259,
+                111,
+                254
+              ]
+            ],
+            "layer11_route_ids": [
+              [
+                195,
+                216,
+                174,
+                6,
+                122,
+                293,
+                239,
+                173
+              ]
+            ]
+          },
+          "failed_observables": [],
+          "metrics": {
+            "layer10_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0004863375215791166,
+              "outside_original_bound": []
+            },
+            "layer11_post_moe": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0007300917059183121,
+              "outside_original_bound": []
+            },
+            "summary": {
+              "values": 1152,
+              "max_abs": 0.00390625,
+              "relative_l2": 0.0005412722239270806,
+              "outside_original_bound": []
+            }
+          }
+        }
+      }
+    }
+  ]
+}
