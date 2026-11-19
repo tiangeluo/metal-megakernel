@@ -9,7 +9,7 @@ from pathlib import Path
 import tempfile
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from tracker.measurements import diagnostic_reports, final_report, preliminary_figure, read_runs
+from tracker.measurements import diagnostic_reports, final_report, followup_status, preliminary_figure, read_runs, repeated_figure
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,6 +43,54 @@ def stack_failure(run):
     return message
 
 
+def replay_markup(records):
+    if not records:
+        return ""
+    methods = ("compiled", "staged", "hybrid", "single")
+    rows = []
+    paired = []
+    route_and_summary_passed = True
+    matched_checks = []
+    for length, seed, failures, comparisons, stage in records:
+        cells = "".join(f"<td>{escape(failures.get(m, 'Pass'))}</td>" for m in methods)
+        rows.append(f"<tr><td>{length:,}</td><td>{seed}</td>{cells}</tr>")
+        for method in methods:
+            obs = comparisons.get(method, {}).get("vs_cpu", {}).get("observables", {})
+            for key in ("layer10_route_ids", "layer11_route_ids", "summary"):
+                regions = obs.get(key, {}).get("regions", {})
+                if not regions or any(r["violations"] for r in regions.values()):
+                    route_and_summary_passed = False
+        if failures:
+            paired.append({m: comparisons.get(m, {}).get("vs_compiled", {}) for m in methods[1:]})
+            layers = stage.get("findings", {}).get("layers", {})
+            if stage.get("method") == "compiled" and layers:
+                def outcomes(tree):
+                    if isinstance(tree, dict):
+                        if "passed" in tree:
+                            yield tree["passed"]
+                        for value in tree.values():
+                            yield from outcomes(value)
+                checks = list(outcomes(layers))
+                if checks and all(checks):
+                    matched_checks.append(len(checks))
+    notes = []
+    if route_and_summary_passed:
+        notes.append("Every schedule matched both layers’ expert IDs exactly and passed the tolerance check for the final residual.")
+    if paired and all(p["hybrid"].get("passed") and all(
+            p[m].get("failed_observables") == ["layer11_post_moe"] for m in ("staged", "single")) for p in paired):
+        notes.append("On the failing fixtures, hybrid also passed against compiled MLX. Staged and single each differed "
+                     "from compiled MLX in the global layer’s expert-output history.")
+    if paired and len(matched_checks) == len(paired) and len(set(matched_checks)) == 1:
+        notes.append(f"All {matched_checks[0]} local checks on the compiled path passed for each failing fixture "
+                     "when NumPy received the same stage inputs. The source of the end-to-end difference remains open.")
+    return ('<h3 class="subhead">Two-layer GPU correctness</h3><p class="note">Each row replays one fixed token through '
+            'both layers. Pass means that every registered output agreed with the CPU reference within its tolerance. '
+            'Fractions count entries outside tolerance in the global layer’s expert-output history.</p>'
+            '<div class="scroll"><table><thead><tr><th>Visible tokens</th><th>Seed</th><th>Compiled MLX</th>'
+            '<th>Staged</th><th>Hybrid</th><th>Single</th></tr></thead><tbody>' + "".join(rows) +
+            '</tbody></table></div>' + "".join(f'<p class="note">{escape(n)}</p>' for n in notes))
+
+
 def render():
     phases = read_json(HERE / "tasks.json")
     tasks = {t[0]: t for group in phases for t in group["tasks"]}
@@ -65,7 +113,7 @@ def render():
     report = final_report(RESULTS, cohort)
     attention_report = None if report else final_report(RESULTS, cohort, "attention")
     diagnostics = diagnostic_reports(RESULTS, cohort[-1] if cohort else None)
-    replay_failed = any(statuses for _, _, statuses in diagnostics)
+    replay_failed = any(record[2] for record in diagnostics)
     history = []
     cells, figure, headnote = {}, "", ""
     summary = "CPU verified · GPU pending"
@@ -88,19 +136,17 @@ def render():
                 state = "Blocked"
                 evidence += " " + failure
             set_state(tasks[title], state, evidence)
-    if diagnostics:
-        lines = []
-        for length, seed, failures in diagnostics:
-            outcome = " · ".join(failures) if failures else "all four schedules passed"
-            lines.append(f"At {length:,} tokens and seed {seed}, {outcome}.")
-        diagnostic_html = ('<div class="callout"><b>Two-layer GPU replay</b><p>'
-                           + '</p><p>'.join(escape(line) for line in lines)
-                           + '</p></div>')
-        if replay_failed:
-            set_state(tasks["Time the connected two-layer stack"], "Blocked",
-                      "A replay exceeded the registered numerical tolerance. See the case, seed and schedules above.")
-    else:
-        diagnostic_html = ""
+    diagnostic_html = replay_markup(diagnostics)
+    parent = next((r for r in cohort if r.name == "m4pro-02-a" and r.suite == "attention" and r.status == "complete"), None)
+    if diagnostics and parent:
+        status = followup_status(RESULTS, parent)
+        diagnostic_html += ('<div class="callout"><b>Layer 11 crossover</b><p>The replay swaps the incoming residual '
+                            'and attention heads independently between CPU, compiled MLX and staged Metal. The same CPU '
+                            'layer finish evaluates all nine input pairs to test which input carries the drift.</p>'
+                            f'<p>{escape(status)}</p></div>')
+    if replay_failed:
+        set_state(tasks["Time the connected two-layer stack"], "Blocked",
+                  "A replay exceeded the registered numerical tolerance. The table above identifies the affected seed, length and schedules.")
     if selected:
         ends = {"attention-b1-l64", "attention-b1-l4096"}
         if any(ends <= r.cases.keys() for r in cohort):
@@ -129,15 +175,25 @@ def render():
                       f"{count} of 2 full sessions have completed with this benchmark configuration. Instruments trace review is pending.")
     if attention_report:
         cells, figure, names, traces = attention_report
+        detailed = repeated_figure(ROOT / "analysis/attention-verified.svg", cohort, names)
+        figure = detailed or figure
         summary = "Attention repeated · stack check failed" if replay_failed or failure else "Attention repeated · stack pending"
         headnote = (f"Attention medians combine {len(names)} verified sessions, {', '.join(names)}. "
-                    "Each stack cell will appear in the combined report once both sessions pass its correctness checks.")
+                    f"Each attention cell contains {len(names)*selected.spec['trials']} paired timing blocks across "
+                    f"{selected.spec['fixtures']} fixed token states.")
+        key = "attention-b1-l4096"
+        if (key, "split") in cells and (key, "single") in cells:
+            headnote += (f" At 4,096 tokens, dividing the KV scan into chunks reduced median wall time from "
+                         f"{cells[key, 'single']:,.0f} to {cells[key, 'split']:,.0f} µs "
+                         f"({cells[key, 'single']/cells[key, 'split']:.2f}×).")
         if failure:
             headnote += " " + failure
         set_state(tasks["Run the full attention sweep"], "Complete",
                   f"All seven attention cases have independent repeats in {', '.join(names)}.")
         set_state(tasks["Render the figure and results table"], "In progress",
                   "The attention figure and table combine two verified runs. Two-layer latency is pending.")
+        set_state(tasks["Repeat and audit the measurements"], "In progress",
+                  f"Both attention sessions are complete and their raw trials passed verification. Connected-stack timings and Instruments traces remain open.")
     if report:
         cells, figure, names, traces = report
         summary = "GPU report available"

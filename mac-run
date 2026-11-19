@@ -51,6 +51,12 @@ case "${1:-}" in
     trap render EXIT
     probe
     ;;
+  followup)
+    trap render EXIT
+    probe
+    if [ ! -x .venv/bin/python ]; then setup; fi
+    .venv/bin/python -m scripts.followup
+    ;;
   pilot|full|study)
     trap render EXIT
     probe
@@ -62,5 +68,5 @@ case "${1:-}" in
       run_suite "$1" "$name"
     fi
     ;;
-  *) echo "Usage: ./mac-run connect | probe | pilot [session] | full [session] | study [study-name]" >&2; exit 64 ;;
+  *) echo "Usage: ./mac-run connect | probe | pilot [session] | full [session] | study [study-name] | followup" >&2; exit 64 ;;
 esac

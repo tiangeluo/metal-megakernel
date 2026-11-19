@@ -18,12 +18,13 @@ COLORS = {"compiled": "#275777", "staged": "#8c638a", "hybrid": "#007c74",
 SHAPES = {"compiled": "o", "staged": "s", "hybrid": "^", "single": "D", "split": "X"}
 
 
-def load(session, suite, cases):
+def load(session, suite, cases, *, require_complete=False):
     directory = REPO / "results" / session / suite
     manifest = json.loads((directory / "manifest.json").read_text())
     spec = manifest["spec"]
     if ((spec["session"], spec["suite"], spec["schema"]) != (session, suite, SCHEMA)
-            or manifest["environment"]["gpu_probe"]["passed"] is not True):
+            or manifest["environment"]["gpu_probe"]["passed"] is not True
+            or (require_complete and manifest["status"] != "complete")):
         raise ValueError(f"Invalid session manifest at {directory}")
     values = {}
     digests = {}
@@ -55,20 +56,22 @@ def split_effects(records, rng):
     return result
 
 
-def make_figure(sweep, effects, provenance):
+def make_figure(sweep, effects, provenance, *, path=HERE / "attention-preliminary.svg",
+                subtitle="Preliminary  /  Apple M4 Pro  /  isolated global attention, batch one",
+                groups=("Sweep", "Pilot"),
+                caption="Each point uses 100 paired trials across two fixtures. Whiskers show within-run 95% bootstrap intervals."):
     mpl.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "svg.fonttype": "none",
                          "svg.hashsalt": "m4pro-attention", "axes.spines.top": False,
                          "axes.spines.right": False})
     fig, (ax, comparison) = plt.subplots(1, 2, figsize=(11.4, 4.6), width_ratios=(1.6, 1))
     fig.subplots_adjust(left=.077, right=.98, bottom=.21, top=.7, wspace=.32)
     fig.text(.077, .93, "Splitting the KV scan across threadgroups", fontsize=20, weight="bold")
-    fig.text(.077, .855, "Preliminary  /  Apple M4 Pro  /  isolated global attention, batch one",
-             fontsize=10, color="#45515a")
+    fig.text(.077, .855, subtitle, fontsize=10, color="#45515a")
     cases = [case for case in ATTENTION if case.batch == 1]
     for method in (*SCHEDULES, "split"):
         used = [case for case in cases if method in case.methods]
         ax.plot([case.length for case in used],
-                [np.median(sweep[case][0][:, case.methods.index(method)]) for case in used],
+                [np.median(sweep[case][:, case.methods.index(method)]) for case in used],
                 marker=SHAPES[method], markersize=6 if method == "split" else 4.5,
                 color=COLORS[method], linewidth=1.7, linestyle="None" if method == "split" else "-",
                 label=LABELS[method])
@@ -87,7 +90,7 @@ def make_figure(sweep, effects, provenance):
     labels = []
     for case, group in zip(PILOT, (ypos[:2], ypos[2:])):
         for (label, color, marker), y in zip(
-            (("Sweep", "#173b50", "o"), ("Pilot", "#728797", "s")), group
+            ((groups[0], "#173b50", "o"), (groups[1], "#728797", "s")), group
         ):
             ratio, (lo, hi) = effects[label, case]
             comparison.hlines(y, lo, hi, color=color, linewidth=1.5)
@@ -103,9 +106,8 @@ def make_figure(sweep, effects, provenance):
     for panel in (ax, comparison):
         panel.grid(axis="y" if panel is ax else "x", color="#dce2e5", linewidth=.7)
         panel.set_axisbelow(True)
-    fig.text(.077, .04, "Each point uses 100 paired trials across two fixtures. Whiskers show within-run 95% bootstrap intervals.",
-             fontsize=8.5, color="#45515a")
-    fig.savefig(HERE / "attention-preliminary.svg",
+    fig.text(.077, .04, caption, fontsize=8.5, color="#45515a")
+    fig.savefig(path,
                 metadata={"Date": None, "Title": "Splitting the KV scan across threadgroups",
                           "Description": json.dumps(provenance, sort_keys=True)})
     plt.close(fig)
@@ -129,7 +131,7 @@ def main():
         "pilot_session": pilot_spec["session"],
         "case_sha256": {sweep_spec["session"]: sweep_digests, pilot_spec["session"]: pilot_digests},
     }
-    make_figure(sweep, effects, provenance)
+    make_figure({case: values[0] for case, values in sweep.items()}, effects, provenance)
     schedules = (*SCHEDULES, "split")
     rows = [["Run", "Batch", "Visible tokens", *(LABELS[m] for m in schedules)],
             ["---", "---:", "---:", *(["---:"] * len(schedules))]]

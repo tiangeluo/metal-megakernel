@@ -2,6 +2,7 @@
 import base64
 import csv
 from dataclasses import dataclass
+import hashlib
 from html import escape
 import json
 import math
@@ -94,6 +95,30 @@ def preliminary_figure(path, selected, runs):
         return ""
 
 
+def repeated_figure(path, runs, names):
+    """Attach the two-panel figure only when all source CSVs match the verified runs."""
+    try:
+        description = ET.parse(path).find(".//{http://purl.org/dc/elements/1.1/}description")
+        provenance = json.loads(description.text) if description is not None else {}
+        if sorted(provenance["sessions"]) != sorted(names) or set(provenance["case_sha256"]) != set(names):
+            return ""
+        from bench.protocol import ATTENTION
+        cases = {case.name for case in ATTENTION}
+        for name in names:
+            digests = provenance["case_sha256"][name]
+            if set(digests) != cases or not any(
+                    run.name == name and run.status == "complete"
+                    and run.spec["machine"]["sources_sha256"] == provenance["source_sha256"]
+                    and all(digest == run.digests.get(case) for case, digest in digests.items())
+                    for run in runs):
+                return ""
+        return figure_markup(path, "Attention latency across context lengths and the split-context control at the endpoints.",
+                             f"Two independent M4 Pro sessions, {', '.join(names)}. Both panels use synchronized "
+                             "wall time for a single decode step on the isolated global-attention path.")
+    except (KeyError, OSError, TypeError, ValueError, ET.ParseError):
+        return ""
+
+
 def final_report(results, runs, scope="full"):
     """Accept a report only when all of its registered cases have matching provenance."""
     folder = results / ("report" if scope == "full" else "report-attention")
@@ -148,19 +173,71 @@ def diagnostic_reports(results, latest):
                     or data["seed"] not in range(first_seed, first_seed + latest.spec["fixtures"])
                     or path.name != f'{data["case"]}-seed{data["seed"]}.json'):
                 continue
-            statuses = []
+            statuses = {}
             for method in ("compiled", "staged", "hybrid", "single"):
                 if method in data["method_errors"]:
-                    statuses.append(f"{method} execution error")
+                    statuses[method] = "Execution error"
                     continue
                 result = data["comparisons"][method]["vs_cpu"]
                 if not result["passed"]:
                     fields = result["failed_observables"] + result.get("extra_observables", [])
-                    statuses.append(f"{method} failed on {', '.join(fields)}")
+                    if fields == ["layer11_post_moe"]:
+                        region = result["observables"]["layer11_post_moe"]["regions"]["all"]
+                        statuses[method] = f"{region['violations']:,} / {region['size']:,}"
+                    else:
+                        statuses[method] = ", ".join(fields) or "Failed"
             if data["passed"] == bool(statuses):
                 continue
             length = int(data["case"].split("-l")[-1])
-            records.append((length, data["seed"], statuses))
+            records.append((length, data["seed"], statuses, data["comparisons"], data.get("stage_isolation", {})))
         except (KeyError, OSError, TypeError, ValueError):
             continue
     return sorted(records)
+
+
+def followup_status(results, parent):
+    """Count checksum-verified captures and candidate trace bundles for the latest follow-up."""
+    for path in sorted(results.glob("m4pro-02-followup-*/manifest.json"), reverse=True):
+        try:
+            state = json.loads(path.read_text())
+            if state["parent"] != parent.name or state["parent_machine"] != parent.spec["machine"]:
+                continue
+            count = 0
+            for length in (64, 4096):
+                for seed in range(parent.spec["seed"], parent.spec["seed"] + parent.spec["fixtures"]):
+                    tag = f"crossover-stack-b1-l{length}-seed{seed}"
+                    if state["crossovers"].get(tag) != "complete":
+                        continue
+                    archive = path.parent / (tag + ".npz")
+                    try:
+                        record = json.loads((path.parent / (tag + ".json")).read_text())
+                        if (record["length"] == length and record["seed"] == seed and record["batch"] == 1
+                                and record["methods"] == ["cpu", "compiled", "staged"] and record["wrapper_replay_exact"]
+                                and record["device"] == state["machine"]["device"]
+                                and record["sources_sha256"] == state["machine"]["sources_sha256"]
+                                and record["capture"] == archive.name and len(record["crossed_cpu_finish"]) == 9
+                                and hashlib.sha256(archive.read_bytes()).hexdigest() == record["capture_sha256"]):
+                            count += 1
+                    except (KeyError, OSError, TypeError, ValueError):
+                        continue
+            traces = set()
+            for index in (path.parent / "traces").glob("*/capture.json"):
+                trace = json.loads(index.read_text())
+                if trace.get("case") != "attention-b1-l4096":
+                    continue
+                for method in ("compiled", "hybrid", "single", "split"):
+                    row = trace.get("captures", {}).get(method, {})
+                    if (row.get("status") == "awaiting_inspection" and row.get("target_parity_passed")
+                            and row.get("trace") == f"{method}.trace" and (index.parent / row["trace"]).is_dir()):
+                        traces.add(method)
+            details = f"{count} of 4 GPU captures have matching JSON and array-file checksums."
+            if traces:
+                details += f" {len(traces)} of 4 candidate Instruments traces await inspection."
+            elif state["trace_status"] == "unavailable or incomplete":
+                details += " Instruments capture was unavailable or incomplete."
+            else:
+                details += " Instruments capture is pending."
+            return details
+        except (KeyError, OSError, TypeError, ValueError):
+            continue
+    return "The four GPU captures and Instruments traces are awaiting collection."

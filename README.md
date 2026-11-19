@@ -6,6 +6,10 @@ This repository compares compiled MLX, staged Metal, hybrid Metal/MLX and single
 
 ## Current evidence
 
+Two complete M4 Pro attention sweeps measured all seven workloads. At batch one and 4,096 tokens, the median synchronized latency was 2,875 µs for single-dispatch Metal, 432 µs for the split-context control and 476 µs for compiled MLX. The single-to-split ratios were 6.63× and 6.74× in the two sessions. All measurements and correctness certificates are included. [Figure and timing table](analysis/attention-verified.md)
+
+In the connected two-layer decoder, all four GPU schedules passed at both context lengths on one seed. On the second seed, every schedule exceeded the original tolerance only in the second layer’s expert-output history. The final residuals and expert IDs passed throughout. The study stopped before timing the stack. [Stack replay evidence](analysis/stack-parity.md)
+
 The independent CPU prefilling and incremental decoding implementations have been checked at the published head geometry. At 64 successive tokens, the maximum absolute gated-output difference was 0.0009765625. The connected decoder completed CPU forward passes at visible lengths 64 and 4,096 with both full expert banks allocated. See the [decoder smoke checks](decoder/cpu-smoke.json) and [standalone progress page](dist/index.html) for the evidence and GPU run status.
 
 The first M4 Pro sweep certified all seven isolated attention cases. At batch one and 4,096 tokens, the single-dispatch implementation took 2,840 µs and the split-context control took 436 µs. The pilot measured 2,861 and 453 µs. The first stack precheck stopped on four elements in the second layer’s expert-output history. Both runs used benchmark source from commit `29cf099`. Their original CSVs, parity certificates and manifests are included under `results/`. [Measured table and figure](analysis/attention-preliminary.md)
@@ -23,7 +27,9 @@ From the root of the checkout:
 
 The probe dispatches 128 threads using 22 KiB of threadgroup storage and checks every output. The study runs the tests and pilot, then replays all four schedules on each of the two stack fixtures at 64 and 4,096 tokens. For a failed fixture, the replay records the affected schedule, observable, coordinate, and a stage-by-stage comparison using the actual inputs to the first failing schedule. It then measures two independent attention sessions and writes `results/report-attention/`. If the stack checks pass, the study also measures both stack sessions and produces the combined report. Each timed cell still has to pass the CPU comparison before and after timing.
 
-To continue from the first M4 Pro attempt with the new diagnostics, use `./mac-run study m4pro-02`. Reuse that label to resume interrupted work on the same code revision. Once the benchmark source or environment changes, use a fresh label. The study records the environment, power state and available thermal data for each suite. Its HTML tracker refreshes on disk as each case or diagnostic completes.
+The completed `m4pro-02` attention sessions and all four decoder diagnostic records are included. To collect another independent study, use a fresh label. Reuse a label to resume interrupted work on the same code revision. The study records the environment, power state and available thermal data for each suite. Its HTML tracker refreshes on disk as each case or diagnostic completes.
+
+Use `./mac-run followup` on the Mac to investigate the original stack discrepancy. It captures the incoming residual and gated attention heads at layer 11 for NumPy, compiled MLX and staged Metal, then swaps the sources independently and reruns the same expert calculation. Each capture must reproduce the original wrapper outputs exactly. The command covers the failing seed and passing control at both lengths, saves small arrays for offline analysis, and attempts a separate long-context Instruments capture for four attention schedules. Trace collection has its own status. The results directory printed at launch holds the evidence, separately from the timing sessions. This follow-up does not repeat the attention sweeps.
 
 For just the two-point pilot:
 

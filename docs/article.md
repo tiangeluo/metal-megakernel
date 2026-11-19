@@ -24,16 +24,22 @@ The CPU reference processed a 64-token trajectory at the published head dimensio
 
 ## One dispatch or four?
 
-On my M4 Pro, a single dispatch took 2,840 µs to process one token against 4,096 visible positions. Splitting the history into 32-token chunks and merging their softmax statistics took 436 µs across four dispatches, a 6.51× difference. The pilot independently measured 2,861 versus 453 µs (6.32×). Simply separating preparation, scan and gate into three dispatches took 2,132 µs. How the scan divides work matters here even among schedules with similar dispatch counts.
+On my M4 Pro, the single-dispatch implementation took 2,875 µs to process one token against 4,096 visible positions. Dividing the history into 32-token chunks and merging their softmax statistics took 432 µs across four dispatches. That is a **6.66× speedup over the single-dispatch Metal implementation**. The two independent sweeps measured 6.63× and 6.74×. Optimized MLX already took just 476 µs, so the same split kernel was **1.10× as fast as compiled MLX**.
 
-![Median latency across six context lengths, with a second panel comparing single and split schedules at 64 and 4,096 tokens in the pilot and sweep.](../analysis/attention-preliminary.svg)
+![Pooled attention latency across six context lengths and the single-to-split latency ratio at both endpoints in each independent sweep.](../analysis/attention-verified.svg)
 
 | Isolated global attention, median wall time | Compiled MLX | Staged Metal | Hybrid | Single dispatch | Split context |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Batch 1, 64 tokens | 412 µs | 223 µs | 329 µs | 225 µs | 210 µs |
-| Batch 1, 4,096 tokens | 490 µs | 2,132 µs | 456 µs | 2,840 µs | 436 µs |
-| Batch 8, 4,096 tokens | 1,678 µs | 3,128 µs | 1,643 µs | 3,588 µs | — |
+| Batch 1, 64 tokens | 368.5 µs | 301.3 µs | 300.5 µs | 320.5 µs | 245.0 µs |
+| Batch 1, 4,096 tokens | 476.0 µs | 2,146.3 µs | 448.5 µs | 2,875.3 µs | 431.7 µs |
+| Batch 8, 4,096 tokens | 1,683.6 µs | 3,126.1 µs | 1,618.7 µs | 3,583.0 µs | — |
 
-Each cell summarizes 100 synchronized, paired trials across two input states in the first sweep. At 64 tokens, the split control’s advantage over single dispatch was small enough that the sweep’s 95% interval included a tie. At 4,096, the split scan exposed 1,024 independent threadgroups where the single dispatch exposed eight. The native command-buffer times also fell from 2,678 to 278 µs, so host launch overhead alone cannot explain the long-context result. Measuring how busy the GPU cores were requires a hardware trace. [Trial intervals, pilot medians and raw measurements](../analysis/attention-preliminary.md)
+At batch one, the staged implementation already separates preparation, scan and gate. Its scan still assigns the entire history of each KV head to one threadgroup. The split implementation divides that scan among 1,024 threadgroups at 4,096 tokens, up from eight. On the GPU itself, single dispatch took about 2,715 µs and split took about 278 µs in each sweep. The difference therefore extends well beyond CPU launch time. A hardware trace would be needed to measure realized occupancy.
 
-The two-layer run stopped at its first correctness check. Four of 3,456 entries in the global layer’s expert-output history exceeded the registered tolerance at 64 tokens. A CPU control showed that changing just the projection accumulation can also push this intermediate past tolerance while both expert routes and the final residual pass. The cause of the four GPU differences is still open. End-to-end latencies will depend on the time spent in projections, routing and experts as well as the attention scan. [CPU sensitivity experiment](../decoder/README.md)
+At 64 tokens, the single-to-split ratio shrank to 1.31×. The fastest of the four main schedules also switched from staged to hybrid between sweeps. From 256 through 4,096 tokens, hybrid had the lowest median of those four schedules in both runs. Each cell pools 200 synchronized, paired timing blocks across two seeded token states. The pooled 95% interval for the single-to-split ratio was 1.29–1.33× at 64 tokens and 6.59–6.73× at 4,096. These intervals describe trial variation within the two consecutive sessions on this Mac. [All seven measured workloads, per-session results and raw trials](../analysis/attention-verified.md)
+
+## How far does the result carry into the decoder?
+
+All four schedules matched the CPU oracle on both layers’ expert IDs and the final residual for both seeds at both lengths. On one seed, however, all four crossed the registered tolerance in the global layer’s expert-output history. At 64 tokens, compiled MLX and hybrid each missed eight of 3,456 values. Staged and single each missed four. At 4,096 tokens, each schedule missed one. The other seed passed every check.
+
+That history stores the weighted sum of eight experts. In one failing channel, the CPU reference added signed contributions with a total absolute magnitude of 3.887 to produce just +0.01356. Such cancellation can magnify small upstream differences relative to the result. The instrumented compiled path passed 81 checks per length when compared with CPU operations on the same observed inputs. The source of the accumulated discrepancy remains open, so the timing table covers the isolated attention operation. [Two-layer diagnostics](../analysis/stack-parity.md)
