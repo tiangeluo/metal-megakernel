@@ -1,0 +1,14 @@
+# Dependency versions installed for the M4 Pro study, CPython 3.13.9.
+# contourpy 1.4.0 requires Python 3.12 or newer.
+contourpy==1.4.0 ; python_version >= "3.12"
+cycler==0.12.1
+fonttools==4.68.0
+iniconfig==2.3.1
+kiwisolver==1.5.1
+packaging==26.3
+pillow==13.0.0
+pluggy==1.7.0
+pygments==2.21.0
+pyparsing==3.3.3
+python-dateutil==4.0.0
+tzdata==2026.6

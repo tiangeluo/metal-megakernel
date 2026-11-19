@@ -107,10 +107,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("folder", type=Path, help="Directory containing the completed capture.json")
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--exported", type=Path, help="Use these previously exported XML tables")
+    exports = parser.add_mutually_exclusive_group()
+    exports.add_argument("--exported", type=Path, help="Use these previously exported XML tables")
+    exports.add_argument("--save-exports", type=Path, help="Create a directory for the XML exported from this capture")
     args = parser.parse_args()
     with tempfile.TemporaryDirectory() as temp:
-        exported = args.exported or Path(temp)
+        exported = args.exported or args.save_exports or Path(temp)
+        if args.save_exports is not None:
+            exported.mkdir()
         if args.exported is None:
             cache = Path(temp) / "instruments-home"
             (cache / "Library/Caches").mkdir(parents=True)

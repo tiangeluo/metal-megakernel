@@ -4,6 +4,10 @@ Should a Metal kernel that prepares one token's keys and values also scan its KV
 
 This repository compares compiled MLX, staged Metal, hybrid Metal/MLX and single-dispatch Metal on an Inkling-inspired cached decoder. The isolated global-attention measurement preserves the published 48 query heads, eight KV heads and 128-dimensional heads. The connected two-layer experiment uses a 1,152-wide residual stream, retains separate global Q/K/V depth reads, and routes each token to eight of 384 experts in each layer. The [architecture](docs/architecture.md) explains both workloads and the exact benchmark boundary.
 
+## Reproduce the study
+
+To check the published results from the raw timings, follow the [reproduction guide](REPRODUCIBILITY.md). It includes a CPU-only setup, the expected verification output and a fresh acquisition command for a Metal-visible Mac. From the project root, `./mac-run verify` checks the archive, `./mac-run report` rebuilds the tables and figures, and `./mac-run replicate my-repeat` collects new measurements in a separate directory.
+
 ## Current evidence
 
 Read the [article in your browser](docs/article.html) or open the [Markdown source](docs/article.md). To rebuild the figure, measured tables and tracker from the included trial files, run `./mac-run report` with NumPy and Matplotlib installed. If Pandoc 3 is available, the same command regenerates the HTML article with its figures embedded. Report generation runs on CPU.
@@ -39,7 +43,7 @@ Use `./mac-run followup` on the Mac to investigate the original stack discrepanc
 
 The original crossover is complete. The captured incoming residual alone reproduced expert-output discrepancies at both tested lengths. The follow-on control keeps the expert weights in FP16 and performs the expert computation in FP32. On the recorded inputs, all 12 pairwise CPU comparisons of the control’s layer-11 expert output passed the original tolerance. A full connected CPU replay under an alternate projection summation order passed all 15 checks on both seeds and lengths. The control uses a different expert projection kernel, so any certified latency describes that implementation. [Crossover results](analysis/crossover-results.md) · [Captured-input precision replay](analysis/moe-precision-replay.json) · [Connected CPU replay](analysis/precision-sensitivity.json)
 
-The completed `precision-control-01` sessions are included. To run or resume the precision workflow from a Metal-visible terminal, use `./mac-run precision`. It checks the new GPU projection against a CPU reference, validates the four connected schedules, and writes a separate report under `results/precision-control-01/` after two compatible sessions pass. It also retries the original isolated attention traces with the project’s MLX environment. The trace captures run after timing. Refresh `dist/index.html` when the command finishes.
+The completed `precision-control-01` sessions are included. The original `./mac-run precision` workflow resumes that directory and can reuse those timings. For an independent hardware repeat, use `./mac-run replicate my-repeat`. Append `--traces` to acquire four Instruments captures after timing.
 
 For just the two-point pilot:
 

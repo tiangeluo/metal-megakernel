@@ -1,0 +1,138 @@
+<instruments-projection case="attention-b1-l4096" session="20261119T022803Z-drlponz3">
+  <capture method="single" pid="65555">
+    <table schema="os-signpost" export_sha256="a66a101518123addda8569281e80a1afdc753ca75e59d2ac0857f9413ffc3be4">
+      <row time="5875510208" event-type="Begin" identifier="1" name="Decode step" subsystem="org.megakernel.benchmark" message="attention-b1-l4096/single" />
+      <row time="5879439083" event-type="End" identifier="1" name="Decode step" subsystem="org.megakernel.benchmark" />
+    </table>
+    <table schema="metal-application-command-buffer-submissions" export_sha256="daa1451b03de22bc554d12f74114ef61b13d3a9cc767fef7853faacbd358c724">
+      <row start="1737074833" duration="7093250" cmdbuffer-id="40711286991" num-encoders="1" />
+      <row start="5739766458" duration="93167" cmdbuffer-id="40711286994" num-encoders="1" />
+      <row start="5847869875" duration="35041" cmdbuffer-id="40711286996" num-encoders="1" />
+      <row start="5858330708" duration="28750" cmdbuffer-id="40711286998" num-encoders="1" />
+      <row start="5866565291" duration="32709" cmdbuffer-id="40711287000" num-encoders="1" />
+      <row start="5871045041" duration="28125" cmdbuffer-id="40711287002" num-encoders="1" />
+      <row start="5875515041" duration="21709" cmdbuffer-id="40711287004" num-encoders="1" />
+    </table>
+    <table schema="metal-application-encoders-list" export_sha256="2d268eee34ef0a153373377e20f26be0265229b16a1b5a478124cf8f0f8b8720">
+      <row start="1742582458" duration="1538542" cmdbuffer-id="40711286991" encoder-id="40711286992" />
+      <row start="5739787041" duration="66167" cmdbuffer-id="40711286994" encoder-id="40711286995" />
+      <row start="5847880041" duration="20709" cmdbuffer-id="40711286996" encoder-id="40711286997" />
+      <row start="5858338250" duration="16750" cmdbuffer-id="40711286998" encoder-id="40711286999" />
+      <row start="5866574958" duration="17917" cmdbuffer-id="40711287000" encoder-id="40711287001" />
+      <row start="5871053250" duration="15916" cmdbuffer-id="40711287002" encoder-id="40711287003" />
+      <row start="5875520625" duration="13291" cmdbuffer-id="40711287004" encoder-id="40711287005" />
+    </table>
+    <table schema="metal-gpu-intervals" export_sha256="4d36e90e56d080b3249411babaff7771e5e5e8e0c90db65dde32bcc2855d0f70">
+      <row start="1746525541" duration="11834" cmdbuffer-id="40711286991" encoder-id="40711286992" channel-name="Compute" state="Active" />
+      <row start="5742035083" duration="9489708" cmdbuffer-id="40711286994" encoder-id="40711286995" channel-name="Compute" state="Active" />
+      <row start="5848361875" duration="9505458" cmdbuffer-id="40711286996" encoder-id="40711286997" channel-name="Compute" state="Active" />
+      <row start="5858757625" duration="7353291" cmdbuffer-id="40711286998" encoder-id="40711286999" channel-name="Compute" state="Active" />
+      <row start="5866717416" duration="3929375" cmdbuffer-id="40711287000" encoder-id="40711287001" channel-name="Compute" state="Active" />
+      <row start="5871522375" duration="3580833" cmdbuffer-id="40711287002" encoder-id="40711287003" channel-name="Compute" state="Active" />
+      <row start="5875956708" duration="3393583" cmdbuffer-id="40711287004" encoder-id="40711287005" channel-name="Compute" state="Active" />
+    </table>
+    <table schema="metal-shader-profiler-intervals" export_sha256="eda31dbcfb524f4f44d305694a9ac62a9b064559bb9beda33b1524dd6a9aee87" />
+  </capture>
+  <capture method="split" pid="67919">
+    <table schema="os-signpost" export_sha256="a3c3efab6606be06ba71dec9b4ee074da9e803ae0847f8efb02505f0eb5c4074">
+      <row time="4359402750" event-type="Begin" identifier="1" name="Decode step" subsystem="org.megakernel.benchmark" message="attention-b1-l4096/split" />
+      <row time="4361081500" event-type="End" identifier="1" name="Decode step" subsystem="org.megakernel.benchmark" />
+    </table>
+    <table schema="metal-application-command-buffer-submissions" export_sha256="2c821d1895969c16a58c1b1ed9c15099cbdf032fa2ccd016c7afdda8a535197f">
+      <row start="1569154166" duration="4839750" cmdbuffer-id="40728069134" num-encoders="1" />
+      <row start="4230945458" duration="75208" cmdbuffer-id="40728069137" num-encoders="1" />
+      <row start="4351305708" duration="46958" cmdbuffer-id="40728069139" num-encoders="1" />
+      <row start="4353486375" duration="35000" cmdbuffer-id="40728069141" num-encoders="1" />
+      <row start="4355451583" duration="27208" cmdbuffer-id="40728069143" num-encoders="1" />
+      <row start="4357409833" duration="23375" cmdbuffer-id="40728069145" num-encoders="1" />
+      <row start="4359407250" duration="19875" cmdbuffer-id="40728069147" num-encoders="1" />
+    </table>
+    <table schema="metal-application-encoders-list" export_sha256="2b4629047e3a3db80cf34c7e5d416bcd20792a2ea4282eb41595f6804955623d">
+      <row start="1573115083" duration="858250" cmdbuffer-id="40728069134" encoder-id="40728069135" />
+      <row start="4230963833" duration="50208" cmdbuffer-id="40728069137" encoder-id="40728069138" />
+      <row start="4351324708" duration="23417" cmdbuffer-id="40728069139" encoder-id="40728069140" />
+      <row start="4353499125" duration="17708" cmdbuffer-id="40728069141" encoder-id="40728069142" />
+      <row start="4355457583" duration="17500" cmdbuffer-id="40728069143" encoder-id="40728069144" />
+      <row start="4357415166" duration="15042" cmdbuffer-id="40728069145" encoder-id="40728069146" />
+      <row start="4359412000" duration="13041" cmdbuffer-id="40728069147" encoder-id="40728069148" />
+    </table>
+    <table schema="metal-gpu-intervals" export_sha256="39dea4ee648e2e995c1dad1377806ed02fcf791387b19ada53a32864f5e03d54">
+      <row start="1576319458" duration="11958" cmdbuffer-id="40728069134" encoder-id="40728069135" channel-name="Compute" state="Active" />
+      <row start="4233056916" duration="1159042" cmdbuffer-id="40728069137" encoder-id="40728069138" channel-name="Compute" state="Active" />
+      <row start="4351895708" duration="1164750" cmdbuffer-id="40728069139" encoder-id="40728069140" channel-name="Compute" state="Active" />
+      <row start="4353891875" duration="1157625" cmdbuffer-id="40728069141" encoder-id="40728069142" channel-name="Compute" state="Active" />
+      <row start="4355848458" duration="1162042" cmdbuffer-id="40728069143" encoder-id="40728069144" channel-name="Compute" state="Active" />
+      <row start="4357818041" duration="1159959" cmdbuffer-id="40728069145" encoder-id="40728069146" channel-name="Compute" state="Active" />
+      <row start="4359800583" duration="1160750" cmdbuffer-id="40728069147" encoder-id="40728069148" channel-name="Compute" state="Active" />
+    </table>
+    <table schema="metal-shader-profiler-intervals" export_sha256="eda31dbcfb524f4f44d305694a9ac62a9b064559bb9beda33b1524dd6a9aee87" />
+  </capture>
+  <capture method="compiled" pid="70493">
+    <table schema="os-signpost" export_sha256="8957004a6be6e20c25160433e079b8176af1d0d117504a59ad4dbf388a124aec">
+      <row time="6507274333" event-type="Begin" identifier="1" name="Decode step" subsystem="org.megakernel.benchmark" message="attention-b1-l4096/compiled" />
+      <row time="6508817875" event-type="End" identifier="1" name="Decode step" subsystem="org.megakernel.benchmark" />
+    </table>
+    <table schema="metal-application-command-buffer-submissions" export_sha256="0afa3baf2c9bca3bd1824be3b6f4c371d0d317e4868f7eda3519ef7db9aba32b">
+      <row start="1831486333" duration="5134750" cmdbuffer-id="40744850935" num-encoders="1" />
+      <row start="1836665916" duration="4504128459" cmdbuffer-id="40744850937" num-encoders="1" />
+      <row start="6340820750" duration="157680958" cmdbuffer-id="40744850939" num-encoders="1" />
+      <row start="6498528375" duration="2244458" cmdbuffer-id="40744850941" num-encoders="1" />
+      <row start="6500782291" duration="2563209" cmdbuffer-id="40744850943" num-encoders="1" />
+      <row start="6503354208" duration="2299792" cmdbuffer-id="40744850945" num-encoders="1" />
+      <row start="6505662833" duration="2081250" cmdbuffer-id="40744850947" num-encoders="1" />
+    </table>
+    <table schema="metal-application-encoders-list" export_sha256="695bd87e27a5262876499ad7ec51adcc28bd7f52572fab9cd0a3d5752891d1b5">
+      <row start="1835700375" duration="895750" cmdbuffer-id="40744850935" encoder-id="40744850936" />
+      <row start="4677642666" duration="1663111209" cmdbuffer-id="40744850937" encoder-id="40744850938" />
+      <row start="6498027708" duration="456125" cmdbuffer-id="40744850939" encoder-id="40744850940" />
+      <row start="6500389500" duration="373916" cmdbuffer-id="40744850941" encoder-id="40744850942" />
+      <row start="6503089666" duration="246334" cmdbuffer-id="40744850943" encoder-id="40744850944" />
+      <row start="6505352750" duration="293000" cmdbuffer-id="40744850945" encoder-id="40744850946" />
+      <row start="6507420708" duration="308292" cmdbuffer-id="40744850947" encoder-id="40744850948" />
+    </table>
+    <table schema="metal-gpu-intervals" export_sha256="2b4071f10c64ffb979853cec78bb9e666d5f3ebe8c328acc4c42d53c10798b17">
+      <row start="1839012041" duration="12084" cmdbuffer-id="40744850935" encoder-id="40744850936" channel-name="Compute" state="Active" />
+      <row start="6344529166" duration="539917" cmdbuffer-id="40744850937" encoder-id="40744850938" channel-name="Compute" state="Active" />
+      <row start="6499228708" duration="533708" cmdbuffer-id="40744850939" encoder-id="40744850940" channel-name="Compute" state="Active" />
+      <row start="6501265500" duration="538250" cmdbuffer-id="40744850941" encoder-id="40744850942" channel-name="Compute" state="Active" />
+      <row start="6503741250" duration="538500" cmdbuffer-id="40744850943" encoder-id="40744850944" channel-name="Compute" state="Active" />
+      <row start="6506104083" duration="538583" cmdbuffer-id="40744850945" encoder-id="40744850946" channel-name="Compute" state="Active" />
+      <row start="6508156541" duration="537542" cmdbuffer-id="40744850947" encoder-id="40744850948" channel-name="Compute" state="Active" />
+    </table>
+    <table schema="metal-shader-profiler-intervals" export_sha256="eda31dbcfb524f4f44d305694a9ac62a9b064559bb9beda33b1524dd6a9aee87" />
+  </capture>
+  <capture method="hybrid" pid="72841">
+    <table schema="os-signpost" export_sha256="bb677c113fe6cd7430874f31ca048bdc279c67acba0a0b246a4fb9197ebe26d9">
+      <row time="5226433458" event-type="Begin" identifier="1" name="Decode step" subsystem="org.megakernel.benchmark" message="attention-b1-l4096/hybrid" />
+      <row time="5227439875" event-type="End" identifier="1" name="Decode step" subsystem="org.megakernel.benchmark" />
+    </table>
+    <table schema="metal-application-command-buffer-submissions" export_sha256="57290b802f5974ea71fe7962452cc5a623f347de631a9514929c3c934dba1318">
+      <row start="2284920333" duration="16282458" cmdbuffer-id="40761634270" num-encoders="1" />
+      <row start="2301365583" duration="2756639458" cmdbuffer-id="40761634272" num-encoders="1" />
+      <row start="5058029625" duration="160947750" cmdbuffer-id="40761634274" num-encoders="1" />
+      <row start="5218992000" duration="2095333" cmdbuffer-id="40761634276" num-encoders="1" />
+      <row start="5221095083" duration="1937167" cmdbuffer-id="40761634278" num-encoders="1" />
+      <row start="5223042250" duration="1881458" cmdbuffer-id="40761634280" num-encoders="1" />
+      <row start="5224940541" duration="1799292" cmdbuffer-id="40761634282" num-encoders="1" />
+    </table>
+    <table schema="metal-application-encoders-list" export_sha256="4711f42edf6f244d5040fa21d09cae7ed6f51cec476c3ae25c725720da60c58a">
+      <row start="2297917875" duration="3208333" cmdbuffer-id="40761634270" encoder-id="40761634271" />
+      <row start="5046616916" duration="11370209" cmdbuffer-id="40761634272" encoder-id="40761634273" />
+      <row start="5218845416" duration="121209" cmdbuffer-id="40761634274" encoder-id="40761634275" />
+      <row start="5220997875" duration="82458" cmdbuffer-id="40761634276" encoder-id="40761634277" />
+      <row start="5222802041" duration="218625" cmdbuffer-id="40761634278" encoder-id="40761634279" />
+      <row start="5224657208" duration="251458" cmdbuffer-id="40761634280" encoder-id="40761634281" />
+      <row start="5226526875" duration="204541" cmdbuffer-id="40761634282" encoder-id="40761634283" />
+    </table>
+    <table schema="metal-gpu-intervals" export_sha256="cddb3298ad8ca5ae9a9e978eff856020f24c5b7ba2b83f312e42695f6851d9cc">
+      <row start="2304422166" duration="11917" cmdbuffer-id="40761634270" encoder-id="40761634271" channel-name="Compute" state="Active" />
+      <row start="5060325500" duration="509875" cmdbuffer-id="40761634272" encoder-id="40761634273" channel-name="Compute" state="Active" />
+      <row start="5219824375" duration="510500" cmdbuffer-id="40761634274" encoder-id="40761634275" channel-name="Compute" state="Active" />
+      <row start="5221473833" duration="510000" cmdbuffer-id="40761634276" encoder-id="40761634277" channel-name="Compute" state="Active" />
+      <row start="5223430708" duration="507792" cmdbuffer-id="40761634278" encoder-id="40761634279" channel-name="Compute" state="Active" />
+      <row start="5225367541" duration="512250" cmdbuffer-id="40761634280" encoder-id="40761634281" channel-name="Compute" state="Active" />
+      <row start="5226841125" duration="507958" cmdbuffer-id="40761634282" encoder-id="40761634283" channel-name="Compute" state="Active" />
+    </table>
+    <table schema="metal-shader-profiler-intervals" export_sha256="eda31dbcfb524f4f44d305694a9ac62a9b064559bb9beda33b1524dd6a9aee87" />
+  </capture>
+</instruments-projection>

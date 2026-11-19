@@ -1,6 +1,7 @@
 """Build the portable HTML from the task ledger and locally verified run artifacts."""
 import datetime as dt
 from html import escape
+from itertools import chain
 import json
 import os
 import re
@@ -96,13 +97,20 @@ def render():
     phases = read_json(HERE / "tasks.json")
     tasks = {t[0]: t for group in phases for t in group["tasks"]}
     environment_files = [RESULTS / "environment.json", RESULTS / "host-probe.json", RESULTS / "workspace-environment.json"]
-    for data in (read_json(f) for f in environment_files):
+    runs = read_runs(RESULTS)
+    # The release carries the acquisition probe inside each session manifest.
+    # This also lets the tracker rebuild on a machine without a local GPU.
+    environments = (read_json(f) for f in environment_files)
+    session_environments = (
+        read_json(RESULTS / run.name / run.suite / "manifest.json").get("environment", {})
+        for run in reversed(runs) if run.cases
+    )
+    for data in chain(environments, session_environments):
         p = data.get("gpu_probe", {})
         if p.get("passed") is True and p.get("verified_outputs") == 128:
             set_state(tasks["Confirm GPU execution on this Mac"], "Complete",
                       f"Verified {p['device']} with 128 correct outputs, {p['threadgroup_bytes_used']:,} bytes of threadgroup memory and runtime Metal compilation.")
             break
-    runs = read_runs(RESULTS)
     cohort = [r for r in runs if r.compatible(runs[-1])] if runs else []
     # Display one sweep even when an incomplete repeat has fewer verified cases.
     selected = max((r for r in cohort if r.cases),

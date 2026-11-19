@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import matplotlib as mpl
+mpl.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FixedLocator, FuncFormatter, NullFormatter
@@ -18,8 +19,8 @@ COLORS = {"compiled": "#275777", "staged": "#8c638a", "hybrid": "#007c74",
 SHAPES = {"compiled": "o", "staged": "s", "hybrid": "^", "single": "D", "split": "X"}
 
 
-def load(session, suite, cases, *, require_complete=False):
-    directory = REPO / "results" / session / suite
+def load(session, suite, cases, *, require_complete=False, results=REPO / "results"):
+    directory = results / session / suite
     manifest = json.loads((directory / "manifest.json").read_text())
     spec = manifest["spec"]
     if ((spec["session"], spec["suite"], spec["schema"]) != (session, suite, SCHEMA)
@@ -56,14 +57,15 @@ def split_effects(records, rng):
     return result
 
 
-def make_figure(sweep, effects, provenance, *, path=HERE / "attention-preliminary.svg",
+@plt.style.context("default")
+def make_figure(sweep, effects, provenance, *, path=HERE / "attention-preliminary.svg", height=4.6,
                 subtitle="Preliminary  /  Apple M4 Pro  /  isolated global attention, batch one",
                 groups=("Sweep", "Pilot"),
                 caption="Each point uses 100 paired trials across two fixtures. Whiskers show within-run 95% bootstrap intervals."):
     mpl.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "svg.fonttype": "none",
                          "svg.hashsalt": "m4pro-attention", "axes.spines.top": False,
                          "axes.spines.right": False})
-    fig, (ax, comparison) = plt.subplots(1, 2, figsize=(11.4, 4.6), width_ratios=(1.6, 1))
+    fig, (ax, comparison) = plt.subplots(1, 2, figsize=(11.4, height), width_ratios=(1.6, 1))
     fig.subplots_adjust(left=.077, right=.98, bottom=.21, top=.7, wspace=.32)
     fig.text(.077, .93, "Splitting the KV scan across threadgroups", fontsize=20, weight="bold")
     fig.text(.077, .855, subtitle, fontsize=10, color="#45515a")

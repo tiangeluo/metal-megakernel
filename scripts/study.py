@@ -1,5 +1,6 @@
 """Collect both attention sessions even if connected-decoder parity fails."""
 import argparse
+from contextlib import contextmanager
 import fcntl
 import re
 import subprocess
@@ -9,9 +10,8 @@ from pathlib import Path
 from bench.protocol import FIXTURES, STACK
 
 
-def collect(name, results=Path("results"), invoke=subprocess.run):
-    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,57}", name):
-        raise ValueError("Choose a study label of up to 58 letters, digits, dots, hyphens or underscores.")
+@contextmanager
+def study_lock(results):
     results.mkdir(exist_ok=True, parents=True)
     with (results / ".study.lock").open("a") as lock:
         try:
@@ -19,6 +19,13 @@ def collect(name, results=Path("results"), invoke=subprocess.run):
         except BlockingIOError:
             raise RuntimeError("A study is already running in this checkout.") from None
 
+        yield lock
+
+
+def collect(name, results=Path("results"), invoke=subprocess.run):
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,57}", name):
+        raise ValueError("Choose a study label of up to 58 letters, digits, dots, hyphens or underscores.")
+    with study_lock(results):
         def run(*args, check=True):
             return invoke([sys.executable, *map(str, args)], check=check)
 
@@ -68,8 +75,18 @@ def collect(name, results=Path("results"), invoke=subprocess.run):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("name")
+    parser.add_argument("--suite", choices=("pilot", "full"))
     args = parser.parse_args()
     try:
-        collect(args.name)
+        if args.suite:
+            with study_lock(Path("results")) as lock:
+                for command in (
+                    ["scripts/environment.py", "--out", "results/environment.json"],
+                    ["-m", "bench.run", "--suite", args.suite, "--session", args.name, "--out", "results",
+                     "--environment", "results/environment.json", "--update-tracker"],
+                ):
+                    subprocess.run([sys.executable, *command], check=True, pass_fds=(lock.fileno(),))
+        else:
+            collect(args.name)
     except (ValueError, RuntimeError, subprocess.CalledProcessError) as error:
         parser.exit(1, f"{error}\n")

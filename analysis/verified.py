@@ -21,7 +21,8 @@ def main():
         "source_sha256": first["machine"]["sources_sha256"], "sessions": list(names),
         "case_sha256": {name: digests for name, (_, _, digests) in zip(names, sources)},
     }
-    make_figure(pooled, effects, provenance, path=HERE / "attention-verified.svg",
+    # Preserve the published 330.48-point canvas with the headless renderer.
+    make_figure(pooled, effects, provenance, path=HERE / "attention-verified.svg", height=4.59,
                 subtitle="Apple M4 Pro  /  isolated global attention, batch one  /  two complete sweeps",
                 groups=tuple(records),
                 caption="The curve pools 200 paired blocks per case. Whiskers show each session’s 95% paired bootstrap interval for the ratio.")

@@ -25,7 +25,7 @@ render() {
 setup() {
     if [ ! -x .venv/bin/python ]; then
       if command -v uv >/dev/null 2>&1; then
-        uv venv --python 3.12 .venv
+        uv venv --python "${MEGAKERNEL_PYTHON:-3.13.9}" .venv
       else
         python3 -c 'import sys; assert (3,11) <= sys.version_info[:2] <= (3,13), "Use Python 3.11 through 3.13 or install uv."'
         python3 -m venv .venv
@@ -37,15 +37,25 @@ setup() {
       .venv/bin/python -m pip install -r requirements-mac.txt
     fi
 }
-run_suite() {
-    .venv/bin/python scripts/environment.py --out results/environment.json
-    .venv/bin/python -m bench.run --suite "$1" --session "$2" --out results --environment results/environment.json --update-tracker
-}
 case "${1:-}" in
+  verify)
+    py=python3
+    if [ -x .venv/bin/python ]; then py=.venv/bin/python; fi
+    shift
+    "$py" -m scripts.verify_release "$@"
+    ;;
+  replicate)
+    shift
+    case "${1:-}" in -h|--help) exec python3 -m scripts.replicate --help ;; esac
+    setup
+    .venv/bin/python -m scripts.replicate "$@"
+    ;;
   report)
     py=python3
     if [ -x .venv/bin/python ]; then py=.venv/bin/python; fi
+    "$py" -m analysis.attention_report --scope attention --sessions m4pro-02-a m4pro-02-b --out results/report-attention
     "$py" -m diagnostics.precision_study --report-only --out results/precision-control-01
+    "$py" -m analysis.preliminary
     "$py" -m analysis.verified
     "$py" -m analysis.decoder_performance
     "$py" tracker/render.py
@@ -83,8 +93,8 @@ case "${1:-}" in
     if [ "$1" = study ]; then
       .venv/bin/python -m scripts.study "$name"
     else
-      run_suite "$1" "$name"
+      .venv/bin/python -m scripts.study "$name" --suite "$1"
     fi
     ;;
-  *) echo "Usage: ./mac-run connect | probe | pilot [session] | full [session] | study [study-name] | followup | precision | report" >&2; exit 64 ;;
+  *) echo "Usage: ./mac-run connect | probe | pilot [session] | full [session] | study [study-name] | followup | precision | replicate [label] [--traces] | verify | report" >&2; exit 64 ;;
 esac
