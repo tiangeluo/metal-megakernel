@@ -6,4 +6,4 @@ At batch one, dividing the isolated scan across threadgroups cut latency from 2,
 
 [Read the published blog post](https://tiangeluo.github.io/#/blog/studying-megakernels-on-a-mac)
 
-The [reproduction guide](REPRODUCIBILITY.md) covers verifying the raw timings, rebuilding the figure on CPU and collecting fresh measurements on an Apple-silicon Mac.
+I measured decode latency on the M4 Pro GPU. You can regenerate the figure from the saved timings on a CPU, or collect fresh timings on an Apple-silicon GPU. See the [reproduction guide](REPRODUCIBILITY.md).
